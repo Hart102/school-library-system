@@ -1,0 +1,10 @@
+design a loader
+design success message 
+design error message 
+form validation using material ui 
+integrating redux
+design admin login form                                                 DONE
+design a page for borrowing books
+design a profile page for displaying user details                       DONE 
+
+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
