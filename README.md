@@ -13,4 +13,4 @@ delete book
 keep track of total number of a particular book on the  database
 keep track of members in possession of any book
 
-Preview: http/elibrary.pages.dev
+Preview: https://elibrary.pages.dev/
