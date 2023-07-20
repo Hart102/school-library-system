@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react"
 import * as Icon from 'react-bootstrap-icons'
 import { useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
+import { getAllMembers } from "../../components/APIs/Api"
 import Button from "../../components/Button/Button"
 import { Camera, ImagePreview } from "../../components/Camera/Camera"
 import { FormInput } from "../../components/FormInput"
@@ -32,7 +33,6 @@ const AddMember = () => {
 
     const [message, setMessage] = useState('')
     const [isLoading, setIsLoading] = useState(true);
-    const [messageTitle, setMessageTitle] = useState('')
     const [isModalOpen, setIsModalOpen] = useState(false)
 
 
@@ -75,7 +75,7 @@ const AddMember = () => {
 
     const registerMember = async () => {
         api = 'http://localhost:8000/api/membersRegistration',
-        response = await axios.post(api, formData)
+            response = await axios.post(api, formData)
         data = response.data;
 
         if (data.success) {
@@ -84,13 +84,12 @@ const AddMember = () => {
             setIsModalOpen(true)
             setMessage({ title: 'Success', msg: data.success })
 
-        } else { 
-            setMessageTitle('Error')
-            setMessage({ title: 'Network Error', msg: data.error })
+        } else {
+            setMessage({ title: 'Error', msg: data.error })
         }
     }
 
-    
+
     const updateProfile = async () => {
         api = 'http://localhost:8000/api/editMembersProfile'
         const response = await axios.post(api, formData)
@@ -102,10 +101,9 @@ const AddMember = () => {
             setIsModalOpen(true)
             setMessage({ title: 'Success', msg: data.success })
 
-        } else { 
+        } else {
             setIsModalOpen(true)
-            setMessageTitle('Error')
-            setMessage({ title: 'Network Error', msg: data.error })
+            setMessage({ title: 'Error', msg: data.error })
         }
     }
 
@@ -126,9 +124,10 @@ const AddMember = () => {
             setDepartment(memberToBeUpdated.Department)
             setYearOfAdmission(memberToBeUpdated.YearOfAdmission)
         }
+        
     }, [])
 
-    
+
     return (
         <>
             <FormLayout className={'justify-content-center pb-5'}>

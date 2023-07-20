@@ -80,9 +80,9 @@ button, .btn{
 .sidebar {
   width: 20%;
   height: 100%;
-  position: fixed;
   z-index: 999;
-  transition: 0.5s;
+  transition: 0.3s;
+  position: fixed;
 }
 
 .sidebar ul li a {
@@ -207,13 +207,17 @@ thead {
 /* PROFILE COMPONENT STYLING  */
 /* -------------------------- */
 .book-image-preview{
-  width: 250px;
-  height: 180px;
+  width: 80px;
+  height: 80px;
 }
 
 .book-image-preview img{
   width: 100%;
   height: 100%;
+}
+
+.profile-book-display p{
+  font-size: 0.8em !important;
 }
 
 

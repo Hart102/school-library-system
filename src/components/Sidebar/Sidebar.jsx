@@ -25,7 +25,7 @@ const Sidebar = ({ refName }) => {
             <div className="d-flex flex-column justify-content-between h-100">
                 <ul className='list-unstyled d-flex flex-column justify-content-around  py-4'>
                     {LinkObect && LinkObect.map((link) => (
-                        <li className='nav-item text-capitalize' key={link.text}>
+                        <li className='nav-item text-capitalize' key={link.text} onClick={() => closeSideBar(refName.current)}>
                             <Link to={link.location} className='nav-link my-1 p-2 rounded-pill px-4' key={link.text}>
                                 <link.icon size={20} className='mb-1 me-2' />
                                 {link.text}

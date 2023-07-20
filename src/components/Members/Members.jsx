@@ -21,6 +21,10 @@ const Members = () => {
         navigate('/dashboard/add/member', { state: member })
     }
 
+    const viewProfile = (member) => {
+        navigate('/dashboard/member/profile', { state: member })
+    }
+
     useEffect(() => {
         if (membersList.success) {
             setMembers(membersList.success)
@@ -47,7 +51,7 @@ const Members = () => {
             <tbody>
                 {isLoading ? <tr><td>Loading...</td></tr> :
                     members && members.map((member) => (
-                        <tr className="text-capitalize" role='button' key={member._id}>
+                        <tr className="text-capitalize" role='button' key={member._id} onDoubleClick={() => viewProfile(member)}>
                             <td className='pe-5'>
                                 <img src={member.Profile} className='me-3' />
                                 {member.FullName}

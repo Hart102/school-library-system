@@ -1,36 +1,46 @@
+import { useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
 import { ImagePreview } from "../Camera/Camera"
-import image from "../../assets/imgs/4.jpg"
-import BookCover from '../../assets/books/Poster (4).png'
+import BooksContainer from "./BooksContainer"
 import Card from "./Card"
-import * as Icon from "react-bootstrap-icons"
+
 
 const Profile = () => {
+  const location = useLocation();
+  const navigation = useNavigate();
+  const [member, setMember] = useState(location.state)
+
+
+useEffect(() => {
+  if(!member)return navigation('/')
+},[])
+
   return (
-    <section className="bg-white d-flex flex-column align-items-center p-5">
+    <section className="bg-white d-flex flex-column align-items-center p-5 text-uppercase">
       <div className="text-center">
-        <strong>Mouau/cmp/18/123</strong>
-        <div className="my-3"><ImagePreview src={image} /></div>
-        <strong>Hart Chikanma Justman</strong>
-        <p>Computer science</p>
+        <strong>{member && member.RegNo}</strong>
+        <div className="my-3"><ImagePreview src={member && member.Profile} /></div>
+        <strong>{member && member.FullName}</strong>
+        <p>{member && member.Department}</p>
       </div>
 
       <div className="row g-4 w-100 py-4">
-        <Card title={'College'} text={'colpas'} />
-        <Card title={'Email'} text={'hartjust553@gmail.com'} />
-        <Card title={'Year Of Admission'} text={'2018/2019'} />
+        <Card title={'College'} text={member && member.College} />
+        <Card title={'Email'} text={member && member.Email} />
+        <Card title={'Year Of Admission'} text={member && member.YearOfAdmission} />
       </div>
 
-      <section className="row gap-5 justify-content-center profile-book-display py-5 w-100">
-        <div className="col-md-5">
-          <div className="book-image-preview">
-            <img src={BookCover} className="img-fluid" alt="image" />
-          </div>
-            <b>More tales from shake spare</b>
-            <p>Edition: 2003 Edition</p>
-            <p></p>
-        </div>
-      </section>
-
+      <div
+        className="row gap-5 justify-content-center profile-book-display py-5 w-100 text-center">
+          <b>Books</b>
+          {member && member.borrowed_books.length < 1 ? <p>Books will be displayed here once they're add.</p> :
+            member && member.borrowed_books.map((book) => {
+              return(
+                <BooksContainer BookObject={book} />
+              )
+            })
+          }
+      </div>
     </section>
   )
 }
