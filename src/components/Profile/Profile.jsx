@@ -46,5 +46,3 @@ useEffect(() => {
 }
 
 export default Profile
-
-
