@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { MembersData } from "../components/DemoData";
 
 // const dispatch  = useDispatch();
 // export const getUsers = createAsyncThunk('users/getUsers', async () => {
@@ -13,28 +14,31 @@ import axios from "axios";
 // return
 export const membersSlice = createSlice({
     name: 'members',
-    initialState: { 
-        value: '',
-    },
+    initialState: { value: [] },
+
     reducers: {
         getMembers: (state, action) => {
             state.value = action.payload
         },
 
+        addMembers: (state, action) => {
+            state.value.success = state.value.success.push(action.payload)
+        },
+
         upDateMember: (state, action) => {
-            // console.log(action.payload.formData)
+            
+            state.value.success.map((member) => {
 
-            state.value.map((member) => {
-                if(member._id == action.payload._id){
-
+                if (member._id == action.payload._id) {
+                    member.Profile = action.payload.url;
                     member.RegNo = action.payload.RegNo;
                     member.Email = action.payload.Email;
                     member.College = action.payload.College;
                     member.FullName = action.payload.FullName;
                     member.Department = action.payload.Department;
                     member.YearOfAdmission = action.payload.YearOfAdmission;
-                    
                 }
+
             })
         },
 
@@ -45,5 +49,5 @@ export const membersSlice = createSlice({
 })
 
 
-export const { getMembers, upDateMember, deleteMember } = membersSlice.actions;
+export const { getMembers, addMembers, upDateMember, deleteMember } = membersSlice.actions;
 export default membersSlice.reducer;

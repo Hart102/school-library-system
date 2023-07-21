@@ -10,7 +10,6 @@ const Members = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [members, setMembers] = useState('');
     const [message, setMessage] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [isOpen, setIsOpen] = useState(false)
@@ -27,7 +26,7 @@ const Members = () => {
 
     useEffect(() => {
         if (membersList.success) {
-            setMembers(membersList.success)
+            // setMembers(membersList.success)
             setIsLoading(false)
 
         } else if (membersList.error) {
@@ -50,7 +49,7 @@ const Members = () => {
             </thead>
             <tbody>
                 {isLoading ? <tr><td>Loading...</td></tr> :
-                    members && members.map((member) => (
+                    membersList.success && membersList.success.map((member) => (
                         <tr className="text-capitalize" role='button' key={member._id} onDoubleClick={() => viewProfile(member)}>
                             <td className='pe-5'>
                                 <img src={member.Profile} className='me-3' />

@@ -12,11 +12,15 @@ import MainLayout from './layout/MainLayout';
 import Index from './Pages/Admin/Index'
 import Profile from './components/Profile/Profile';
 
-import { getAllMembers } from './components/APIs/Api';
+import { getAllMembers, getAllBooks } from './components/APIs/Api';
 
 
 const App = () => {
+  // Call Api while App is loading
   getAllMembers()
+  getAllBooks()
+
+
   return (
     <BrowserRouter>
       <Routes>

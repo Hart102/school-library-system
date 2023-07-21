@@ -1,10 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { DemoBooks } from "../components/DemoData";
+// import { DemoBooks } from "../components/DemoData";
 
 export const BookSlice = createSlice({
     name: "books",
-    initialState: { value: DemoBooks },
+    initialState: { value: [] },
     reducers: {
+        getBooks: (state, action) => {
+            state.value = action.payload
+        },
+
         addBook: (state, action) => {
             state.value.push(action.payload);
         },
@@ -14,10 +18,10 @@ export const BookSlice = createSlice({
                 if (book._id == action.payload._id) {
                     book.pages = action.payload.pages;
                     book.edition = action.payload.edition;
-                    book.category = action.payload.category;
+                    book.subject = action.payload.subject;
                     book.publisher = action.payload.publisher;
-                    book.bookTitle = action.payload.bookTitle;
-                    book.coverImage = action.payload.coverImage;
+                    book.title = action.payload.title;
+                    book.file = action.payload.file;
                     book.totalBooks = action.payload.totalBooks;
                 }
             })
@@ -29,5 +33,5 @@ export const BookSlice = createSlice({
     }
 })
 
-export const { addBook, updateBook, deleteBook } = BookSlice.actions;
+export const { getBooks, addBook, updateBook, deleteBook } = BookSlice.actions;
 export default BookSlice.reducer;

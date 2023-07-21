@@ -4,16 +4,14 @@ import { ImagePreview } from "../Camera/Camera"
 import BooksContainer from "./BooksContainer"
 import Card from "./Card"
 
-
 const Profile = () => {
   const location = useLocation();
   const navigation = useNavigate();
   const [member, setMember] = useState(location.state)
 
-
-useEffect(() => {
-  if(!member)return navigation('/')
-},[])
+  useEffect(() => {
+    if (!member) return navigation('/')
+  }, [])
 
   return (
     <section className="bg-white d-flex flex-column align-items-center p-5 text-uppercase">
@@ -32,14 +30,14 @@ useEffect(() => {
 
       <div
         className="row gap-5 justify-content-center profile-book-display py-5 w-100 text-center">
-          <b>Books</b>
-          {member && member.borrowed_books.length < 1 ? <p>Books will be displayed here once they're add.</p> :
-            member && member.borrowed_books.map((book) => {
-              return(
-                <BooksContainer BookObject={book} />
-              )
-            })
-          }
+        <b>Books</b>
+        {member && member.borrowed_books.length < 1 ? <p>Books will be displayed here once they're add.</p> :
+          member && member.borrowed_books.map((book) => {
+            return (
+              <BooksContainer BookObject={book} />
+            )
+          })
+        }
       </div>
     </section>
   )

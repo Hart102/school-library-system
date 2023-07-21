@@ -1,9 +1,9 @@
 import axios from "axios"
 import React, { useEffect, useRef, useState } from "react"
 import * as Icon from 'react-bootstrap-icons'
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useLocation } from "react-router-dom"
-import { getAllMembers } from "../../components/APIs/Api"
+import { addMembers, upDateMember } from "../../Reducers/membersReducer"
 import Button from "../../components/Button/Button"
 import { Camera, ImagePreview } from "../../components/Camera/Camera"
 import { FormInput } from "../../components/FormInput"
@@ -16,6 +16,7 @@ const AddMember = () => {
     const dispatch = useDispatch();
     const location = useLocation();
     const [memberToBeUpdated, setMemberToBeUpdated] = useState(location.state);
+    const memberList = useSelector(state => state.members.value)
 
     // Camera hooks 
     const webcamRef = useRef(null);
@@ -74,11 +75,22 @@ const AddMember = () => {
     let api, response, data;
 
     const registerMember = async () => {
-        api = 'http://localhost:8000/api/membersRegistration',
-            response = await axios.post(api, formData)
+        api = 'http://localhost:8000/api/membersRegistration'
+        response = await axios.post(api, formData)
         data = response.data;
 
         if (data.success) {
+            dispatch(
+                addMembers({
+                    url,
+                    RegNo,
+                    Email,
+                    College,
+                    FullName,
+                    Department,
+                    YearOfAdmission
+                })
+            )
             clearInput();
             setIsLoading(false)
             setIsModalOpen(true)
@@ -92,10 +104,22 @@ const AddMember = () => {
 
     const updateProfile = async () => {
         api = 'http://localhost:8000/api/editMembersProfile'
-        const response = await axios.post(api, formData)
+        response = await axios.post(api, formData)
         data = response.data;
 
         if (data.success) {
+            dispatch(
+                upDateMember({
+                    _id,
+                    url,
+                    RegNo,
+                    Email,
+                    College,
+                    FullName,
+                    Department,
+                    YearOfAdmission
+                })
+            )
             clearInput();
             setIsLoading(false)
             setIsModalOpen(true)
@@ -124,8 +148,8 @@ const AddMember = () => {
             setDepartment(memberToBeUpdated.Department)
             setYearOfAdmission(memberToBeUpdated.YearOfAdmission)
         }
-        
-    }, [])
+
+    }, [memberToBeUpdated])
 
 
     return (
