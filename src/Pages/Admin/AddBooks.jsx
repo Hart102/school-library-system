@@ -114,13 +114,18 @@ const AddBooks = () => {
 
 
 
-
+    const uploadFile = async (event) => {
+        event.preventDefault();
+        api = 'http://localhost:8000/upload'
+        response = await axios.post(api, formData)
+        console.log(response.data)
+    }
 
 
 
     return (
         <>
-            <FormLayout onsubmit={SubmitForm}>
+            <FormLayout onsubmit={uploadFile}>
                 <Title text={bookToUpdate ? 'update book' : 'Add Book'} />
 
 

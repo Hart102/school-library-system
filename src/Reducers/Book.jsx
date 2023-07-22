@@ -10,12 +10,13 @@ export const BookSlice = createSlice({
         },
 
         addBook: (state, action) => {
-            state.value.push(action.payload);
+            state.value.success.push(action.payload);
         },
 
         updateBook: (state, action) => {
             state.value.map((book) => {
                 if (book._id == action.payload._id) {
+                    book.ISBN = action.payload.ISBN
                     book.pages = action.payload.pages;
                     book.edition = action.payload.edition;
                     book.subject = action.payload.subject;

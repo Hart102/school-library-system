@@ -33,8 +33,10 @@ export const BooksTable = () => {
             setIsLoading(false)
             setMessage({ title: 'Network Error', err: booksList.error })
         }
-        console.log(booksList.success.file            )
+        // console.log(booksList.success._id)
     }, [booksList])
+
+    // const uri = '/api/getAllBooks'
 
     return (
         <>
@@ -50,10 +52,12 @@ export const BooksTable = () => {
             <tbody>
                 {isLoading ? <tr><td>Loading...</td></tr> :
                     booksList.success && booksList.success.map((book) => {
+                        // return console.log(book.filename)
+
                         return (
                             <tr className="text-capitalize" role='button' key={book._id}>
                                 <td>
-                                    <img src={"public/1689935223251-tools.jpeg"} className='me-3' />
+                                    <img src={`/getAllBooks${book.filename}`} className='me-3' />
                                     {book.title}
                                 </td>
                                 <td className='pt-3'>{book.author}</td>
