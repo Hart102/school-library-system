@@ -10,12 +10,11 @@ export const BooksTable = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { value, error } = useSelector((state) => state.books);
+    const membersList = useSelector((state) => state.books.value);
 
     const [message, setMessage] = useState('');
     const [isOpen, setIsOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(true);
-    const [images, setImages] = useState('')
 
     const removeBook = (id) => {
         dispatch(deleteBook(id));
@@ -26,15 +25,15 @@ export const BooksTable = () => {
     }
 
     useEffect(() => {
-        if (value) {
+        if (membersList) {
             setIsLoading(false)
 
-        } else if (error) {
+        } else if (membersList.error) {
             setIsOpen(true)
             setIsLoading(false)
             setMessage({ title: 'Network Error', err: error })
         }
-    }, [value])
+    }, [membersList])
 
 
 
@@ -51,7 +50,7 @@ export const BooksTable = () => {
             </thead>
             <tbody>
                 {isLoading ? <tr><td>Loading...</td></tr> :
-                    value && value.map((book, index) => {
+                    membersList.success && membersList.success.map((book, index) => {
                         return (
                             <tr className="text-capitalize" role='button' key={index}>
                                 <td>

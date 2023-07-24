@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 
 // Redux
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, getDefaultMiddleware, } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 
 // Reducers 
@@ -20,7 +20,11 @@ const store = configureStore({
   reducer: {
     books: bookReducers,
     members: membersReducer,
-  }
+  },
+  middleware: (getDefaultMiddleware) =>
+  getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 })
 
 

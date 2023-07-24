@@ -17,7 +17,7 @@ const AddBooks = () => {
     const booksList = useSelector((state) => state.books.value);
     const [bookToUpdate, setBookToUpdate] = useState(location.state);
 
-    const [_id, setId] = useState('')
+    const [id, setId] = useState('')
     const [file, setFile] = useState('');
     const [ISBN, setIsbn] = useState('');
     const [title, setTitle] = useState('');
@@ -31,11 +31,11 @@ const AddBooks = () => {
     const [description, setDescription] = useState('');
 
     const [message, setMessage] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const formData = new FormData();
-    formData.append('_id', _id);
+    formData.append('id', id);
     formData.append('isbn', ISBN);
     formData.append('file', file);
     formData.append('title', title);
@@ -46,6 +46,10 @@ const AddBooks = () => {
     formData.append('publisher', publisher);
     formData.append('totalBooks', totalBooks);
     formData.append('description', description);
+
+
+    // Capture the name of the old image to replaced if the user provides a new image
+    formData.append('oldFileName', bookToUpdate && bookToUpdate.filename)
 
     const clearInputs = () => {
         setIsbn('');
@@ -69,10 +73,13 @@ const AddBooks = () => {
         response = await axios.post(api, formData);
         data = response.data;
 
+        if(!data) setIsLoading(true);
+
         if (data.success) {
 
             dispatch(
                 addBook({
+                    file,
                     ISBN,
                     pages,
                     title,
@@ -86,7 +93,7 @@ const AddBooks = () => {
                 })
             )
             clearInputs()
-            setIsLoading(false)
+            setIsLoading(false);
             setMessage({ title: 'Success', msg: data.success })
         } else {
             console.log(data)
@@ -98,10 +105,12 @@ const AddBooks = () => {
         response = await axios.post(api, formData);
         data = response.data
 
+        if(!data) setIsLoading(true);
+
         if (data.success) {
             dispatch(
                 updateBook({
-                    _id,
+                    id,
                     ISBN,
                     pages,
                     title,
@@ -132,7 +141,7 @@ const AddBooks = () => {
 
     useEffect(() => {
         if (bookToUpdate) { // Update book function 
-            setId(bookToUpdate._id)
+            setId(bookToUpdate.id)
             setIsbn(bookToUpdate.ISBN)
             setTitle(bookToUpdate.title)
             setPages(bookToUpdate.pages)
@@ -145,8 +154,7 @@ const AddBooks = () => {
             setTotalBooks(bookToUpdate.totalBooks)
             setDescription(bookToUpdate.description)
         }
-
-    }, [])
+    }, [bookToUpdate])
 
 
 
@@ -161,49 +169,49 @@ const AddBooks = () => {
 
                 <FormInput
                     label="title"
-                    type='text' value={title}
+                    type='text' value={title || ''}
                     onchange={(e) => setTitle(e.target.value.toLowerCase())}
                 />
 
                 <FormInput
                     label="author"
-                    type='text' value={author}
+                    type='text' value={author || ''}
                     onchange={(e) => setAuthor(e.target.value.toLowerCase())}
                 />
 
                 <FormInput
                     label='edition'
-                    type='text' value={edition}
+                    type='text' value={edition || ''}
                     onchange={(e) => setEdtion(e.target.value.toLowerCase())}
                 />
 
                 <FormInput
                     label="publisher"
-                    type='text' value={publisher}
+                    type='text' value={publisher || ''}
                     onchange={(e) => setPublisher(e.target.value.toLowerCase())}
                 />
 
                 <FormInput
                     label='total copy'
-                    type='text' value={totalBooks}
+                    type='text' value={totalBooks || ''}
                     onchange={(e) => setTotalBooks(e.target.value.toLowerCase())}
                 />
 
                 <FormInput
                     label='length'
-                    type='number' value={length}
+                    type='number' value={length || ''}
                     onchange={(e) => setLength(e.target.value.toLowerCase())}
                 />
 
                 <FormInput
                     label='subject'
-                    type='text' value={subject}
+                    type='text' value={subject || ''}
                     onchange={(e) => setSubject(e.target.value.toLowerCase())}
                 />
 
                 <FormInput
                     label='ISBN'
-                    type='text' value={ISBN}
+                    type='text' value={ISBN || ''}
                     onchange={(e) => setIsbn(e.target.value.toLowerCase())}
                 />
 
@@ -213,7 +221,7 @@ const AddBooks = () => {
                 />
 
                 <textarea
-                    value={description}
+                    value={description || ''}
                     className="form-control fw-light"
                     placeholder="Write book description"
                     onChange={(e) => setDescription(e.target.value)}>
@@ -221,7 +229,7 @@ const AddBooks = () => {
 
                 <Button
                     type='type'
-                    btnText={bookToUpdate ? 'Edit book' : 'Add Book'}
+                    btnText={isLoading ? 'Loading...' : bookToUpdate ? 'Update Book' : 'Add Book'}
                 />
             </FormLayout>
             <PopUp

@@ -3,25 +3,24 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const BookSlice = createSlice({
     name: "books",
-    initialState: { value: '', error: '' },
+    initialState: { value: '' },
     reducers: {
         getBooks: (state, action) => {
-            if (action.payload && action.payload.error) {
-                return state.error = action.payload
-            }
-            state.value = action.payload.success
+            state.value = action.payload
         },
 
         addBook: (state, action) => {
-            state.value.push(action.payload);
+            state.value.success.push(action.payload);
         },
 
         updateBook: (state, action) => {
-            state.value.map((book) => {
-                if (book._id == action.payload._id) {
+            state.value.success.map((book) => {
+                if (book.id == action.payload.id) {
+
                     book.ISBN = action.payload.ISBN
                     book.title = action.payload.title
                     book.pages = action.payload.pages
+                    book.filename = action.payload.file
                     book.author = action.payload.author
                     book.length = action.payload.length
                     book.subject = action.payload.subject
@@ -29,6 +28,7 @@ export const BookSlice = createSlice({
                     book.publisher = action.payload.publisher
                     book.totalBooks = action.payload.totalBooks
                     book.description = action.payload.description
+
                 }
             })
         },
