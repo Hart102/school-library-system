@@ -14,15 +14,18 @@ import { MembersData } from "../components/DemoData";
 // return
 export const membersSlice = createSlice({
     name: 'members',
-    initialState: { value: [] },
+    initialState: { value: '', error: '' },
 
     reducers: {
         getMembers: (state, action) => {
-            state.value = action.payload
+            if(action.payload && action.payload.error) {
+                return state.error = action.payload
+            }
+            state.value = action.payload.success
         },
 
         addMembers: (state, action) => {
-            state.value.success = state.value.success.push(action.payload)
+            state.value = state.value.push(action.payload)
         },
 
         upDateMember: (state, action) => {

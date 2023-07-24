@@ -75,7 +75,7 @@ const AddMember = () => {
     let api, response, data;
 
     const registerMember = async () => {
-        api = 'http://localhost:8000/api/membersRegistration'
+        api = 'http://localhost:3000/api/membersRegistration'
         response = await axios.post(api, formData)
         data = response.data;
 
@@ -103,7 +103,7 @@ const AddMember = () => {
 
 
     const updateProfile = async () => {
-        api = 'http://localhost:8000/api/editMembersProfile'
+        api = 'http://localhost:3000/api/editMembersProfile'
         response = await axios.post(api, formData)
         data = response.data;
 

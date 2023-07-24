@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -9,8 +10,6 @@ import { Title } from "../../components/Title";
 import FormLayout from "../../layout/FormLayout";
 
 
-import axios from "axios";
-
 const AddBooks = () => {
 
     const dispatch = useDispatch();
@@ -18,114 +17,145 @@ const AddBooks = () => {
     const booksList = useSelector((state) => state.books.value);
     const [bookToUpdate, setBookToUpdate] = useState(location.state);
 
+    const [_id, setId] = useState('')
     const [file, setFile] = useState('');
-    const [pages, setPages] = useState('');
-    const [edition, setEdtion] = useState('');
+    const [ISBN, setIsbn] = useState('');
     const [title, setTitle] = useState('');
+    const [pages, setPages] = useState('');
+    const [author, setAuthor] = useState('');
+    const [length, setLength] = useState('');
+    const [edition, setEdtion] = useState('');
     const [subject, setSubject] = useState('');
     const [publisher, setPublisher] = useState('');
     const [totalBooks, setTotalBooks] = useState('');
-    const [author, setAuthor] = useState('')
-    const [length, setLength] = useState('')
-    const [ISBN, setIsbn] = useState('')
+    const [description, setDescription] = useState('');
 
-    const [message, setMessage] = useState('')
+    const [message, setMessage] = useState('');
     const [isLoading, setIsLoading] = useState(true);
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const formData = new FormData();
+    formData.append('_id', _id);
     formData.append('isbn', ISBN);
     formData.append('file', file);
-    formData.append('length', length);
-    formData.append('edition', edition);
-    formData.append('subject', subject);
     formData.append('title', title);
+    formData.append('author', author);
+    formData.append('length', length);
+    formData.append('subject', subject);
+    formData.append('edition', edition);
     formData.append('publisher', publisher);
     formData.append('totalBooks', totalBooks);
-
-
-
+    formData.append('description', description);
 
     const clearInputs = () => {
+        setIsbn('');
         setFile('');
         setPages('');
+        setTitle('');
+        setLength('');
+        setAuthor('');
         setEdtion('');
         setSubject('');
-        setTitle('');
         setPublisher('');
         setTotalBooks('');
+        setDescription('');
     }
 
 
     let api, response, data;
 
     const registerBooks = async () => {
-        api = 'http://localhost:8000/api/registerBooks'
-        response = await axios.post(api, formData)
-        data = response.data
+        api = "http://localhost:3000/api/registerBooks";
+        response = await axios.post(api, formData);
+        data = response.data;
 
         if (data.success) {
+
             dispatch(
                 addBook({
                     ISBN,
                     pages,
+                    title,
+                    length,
+                    author,
                     edition,
                     subject,
-                    title,
-                    author,
                     publisher,
                     totalBooks,
-                    file: file.name
+                    description,
                 })
             )
-
             clearInputs()
             setIsLoading(false)
             setMessage({ title: 'Success', msg: data.success })
-
         } else {
             console.log(data)
         }
     }
 
-    const SubmitForm = (event) => {
-        event.preventDefault();
-        registerBooks()
+    const update = async () => {
+        api = "http://localhost:3000/api/editBook";
+        response = await axios.post(api, formData);
+        data = response.data
 
+        if (data.success) {
+            dispatch(
+                updateBook({
+                    _id,
+                    ISBN,
+                    pages,
+                    title,
+                    length,
+                    author,
+                    edition,
+                    subject,
+                    publisher,
+                    totalBooks,
+                    description,
+                })
+            )
+            clearInputs()
+            setIsLoading(false)
+            setMessage({ title: 'Success', msg: data.success })
+        } else {
+            console.log(data)
+        }
     }
 
-    const getFile = (event) => {
-        setFile(event)
+
+
+    const SubmitForm = (event) => {
+        event.preventDefault();
+        if (!bookToUpdate) return registerBooks()
+        update()
     }
 
     useEffect(() => {
-
         if (bookToUpdate) { // Update book function 
-            setPages(bookToUpdate.pages)
-            setEdtion(bookToUpdate.edition)
-            setFile(bookToUpdate.cover)
-            setSubject(bookToUpdate.subject)
+            setId(bookToUpdate._id)
+            setIsbn(bookToUpdate.ISBN)
             setTitle(bookToUpdate.title)
+            setPages(bookToUpdate.pages)
+            setLength(bookToUpdate.length)
+            setFile(bookToUpdate.filename)
+            setAuthor(bookToUpdate.author)
+            setEdtion(bookToUpdate.edition)
+            setSubject(bookToUpdate.subject)
             setPublisher(bookToUpdate.publisher)
             setTotalBooks(bookToUpdate.totalBooks)
+            setDescription(bookToUpdate.description)
         }
+
     }, [])
 
 
 
 
-    const uploadFile = async (event) => {
-        event.preventDefault();
-        api = 'http://localhost:8000/upload'
-        response = await axios.post(api, formData)
-        console.log(response.data)
-    }
-
 
 
     return (
         <>
-            <FormLayout onsubmit={uploadFile}>
+            <FormLayout onsubmit={SubmitForm}>
                 <Title text={bookToUpdate ? 'update book' : 'Add Book'} />
 
 
@@ -181,6 +211,13 @@ const AddBooks = () => {
                     type='file'
                     onchange={(e) => setFile(e.target.files[0])}
                 />
+
+                <textarea
+                    value={description}
+                    className="form-control fw-light"
+                    placeholder="Write book description"
+                    onChange={(e) => setDescription(e.target.value)}>
+                </textarea>
 
                 <Button
                     type='type'

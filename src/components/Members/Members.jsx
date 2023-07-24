@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import * as Icon from 'react-bootstrap-icons'
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
-import { deleteMember, getMembers } from '../../Reducers/membersReducer'
+import { deleteMember } from '../../Reducers/membersReducer'
 import PopUp from '../Modal/PopUp'
 
 const Members = () => {
@@ -13,7 +13,7 @@ const Members = () => {
     const [message, setMessage] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [isOpen, setIsOpen] = useState(false)
-    const membersList = useSelector((state) => state.members.value)
+    const { value, error } = useSelector((state) => state.members)
 
 
     const updatePofile = (member) => {
@@ -25,16 +25,15 @@ const Members = () => {
     }
 
     useEffect(() => {
-        if (membersList.success) {
-            // setMembers(membersList.success)
+        if (value) {
             setIsLoading(false)
 
-        } else if (membersList.error) {
+        } else if (error) {
             setIsOpen(true)
             setIsLoading(false)
-            setMessage({ title: 'Network Error', err: membersList.error })
+            setMessage({ title: 'Network Error', err: error })
         }
-    }, [membersList])
+    }, [value])
 
     return (
         <>
@@ -49,8 +48,8 @@ const Members = () => {
             </thead>
             <tbody>
                 {isLoading ? <tr><td>Loading...</td></tr> :
-                    membersList.success && membersList.success.map((member) => (
-                        <tr className="text-capitalize" role='button' key={member._id} onDoubleClick={() => viewProfile(member)}>
+                    value && value.map((member, index) => (
+                        <tr className="text-capitalize" role='button' key={index} onDoubleClick={() => viewProfile(member)}>
                             <td className='pe-5'>
                                 <img src={member.Profile} className='me-3' />
                                 {member.FullName}

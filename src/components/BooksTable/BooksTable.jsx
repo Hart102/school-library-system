@@ -4,16 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { deleteBook } from '../../Reducers/Book';
 import PopUp from '../Modal/PopUp';
+import axios from 'axios';
 
 export const BooksTable = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const booksList = useSelector((state) => state.books.value);
+    const { value, error } = useSelector((state) => state.books);
 
     const [message, setMessage] = useState('');
     const [isOpen, setIsOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(true);
+    const [images, setImages] = useState('')
 
     const removeBook = (id) => {
         dispatch(deleteBook(id));
@@ -24,19 +26,17 @@ export const BooksTable = () => {
     }
 
     useEffect(() => {
-        if (booksList.success) {
-            // setMembers(booksList.success)
+        if (value) {
             setIsLoading(false)
 
-        } else if (booksList.error) {
+        } else if (error) {
             setIsOpen(true)
             setIsLoading(false)
-            setMessage({ title: 'Network Error', err: booksList.error })
+            setMessage({ title: 'Network Error', err: error })
         }
-        // console.log(booksList.success._id)
-    }, [booksList])
+    }, [value])
 
-    // const uri = '/api/getAllBooks'
+
 
     return (
         <>
@@ -51,13 +51,11 @@ export const BooksTable = () => {
             </thead>
             <tbody>
                 {isLoading ? <tr><td>Loading...</td></tr> :
-                    booksList.success && booksList.success.map((book) => {
-                        // return console.log(book.filename)
-
+                    value && value.map((book, index) => {
                         return (
-                            <tr className="text-capitalize" role='button' key={book._id}>
+                            <tr className="text-capitalize" role='button' key={index}>
                                 <td>
-                                    <img src={`/getAllBooks${book.filename}`} className='me-3' />
+                                    <img src={`/uploads/${book.filename}`} className='me-3' />
                                     {book.title}
                                 </td>
                                 <td className='pt-3'>{book.author}</td>
