@@ -1,20 +1,20 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import * as Icon from 'react-bootstrap-icons'
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { deleteMember } from '../../Reducers/membersReducer'
 import PopUp from '../Modal/PopUp'
+import DeleteRequest from '../APIs/DeleteRequest'
 
 const Members = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [message, setMessage] = useState('');
+    const [isModelOpen, setIsModelOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(true);
-    const [isOpen, setIsOpen] = useState(false)
-    const { value, error } = useSelector((state) => state.members)
-
+    const membersList = useSelector((state) => state.members.value)
 
     const updatePofile = (member) => {
         navigate('/dashboard/add/member', { state: member })
@@ -24,16 +24,30 @@ const Members = () => {
         navigate('/dashboard/member/profile', { state: member })
     }
 
+    const deleteMembers = (Obj) => {
+        DeleteRequest( //Delete Book function
+            "http://localhost:3000/api/deleteMember", Obj,
+
+            setIsLoading,
+            setIsModelOpen,
+            setMessage,
+            dispatch(deleteMember(Obj.id))
+        )
+    }
+
     useEffect(() => {
-        if (value) {
+        if (membersList.success) {
             setIsLoading(false)
 
-        } else if (error) {
-            setIsOpen(true)
+        } else if (membersList.error) {
+            setIsModelOpen(true)
             setIsLoading(false)
-            setMessage({ title: 'Network Error', err: error })
+            setMessage({
+                title: 'Network Error',
+                err: membersList.error
+            })
         }
-    }, [value])
+    }, [membersList])
 
     return (
         <>
@@ -48,8 +62,8 @@ const Members = () => {
             </thead>
             <tbody>
                 {isLoading ? <tr><td>Loading...</td></tr> :
-                    value && value.map((member, index) => (
-                        <tr className="text-capitalize" role='button' key={index} onDoubleClick={() => viewProfile(member)}>
+                    membersList.success && membersList.success.map((member, index) => (
+                        <tr className="text-capitalize" role='button' key={index} >
                             <td className='pe-5'>
                                 <img src={member.Profile} className='me-3' />
                                 {member.FullName}
@@ -63,23 +77,27 @@ const Members = () => {
                                     role='button'
                                     onClick={() => updatePofile(member)}
                                 />
-                                <Icon.Trash
-                                    role='button'
-                                    onDoubleClick={() => dispatch(deleteMember(member._id))}
-                                />
+                                {isLoading ? <p>Loading...</p> :
+                                    <Icon.Trash
+                                        role='button'
+                                        onDoubleClick={() => deleteMembers({ id: member._id })}
+                                    />
+                                }
                             </td>
                         </tr>
                     ))
                 }
             </tbody>
             <PopUp
-                message={message.err}
+                message={message.msg}
                 title={message.title}
-                action={isOpen}
-                onclick={() => setIsOpen(false)}
+                action={isModelOpen}
+                onclick={() => setIsModelOpen(false)}
             />
         </>
     )
 }
 
 export default Members
+
+// onDoubleClick={() => viewProfile(member)}

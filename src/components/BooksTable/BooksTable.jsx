@@ -1,39 +1,50 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as Icon from 'react-bootstrap-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { deleteBook } from '../../Reducers/Book';
+import DeleteRequest from '../APIs/DeleteRequest';
 import PopUp from '../Modal/PopUp';
-import axios from 'axios';
 
 export const BooksTable = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const membersList = useSelector((state) => state.books.value);
-
     const [message, setMessage] = useState('');
     const [isOpen, setIsOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(true);
-
-    const removeBook = (id) => {
-        dispatch(deleteBook(id));
-    }
+    const booksList = useSelector((state) => state.books.value);
 
     const updateBook = (book) => {
         navigate("/dashboard/add/books", { state: book });
     }
 
+    const deleteBooks = (Obj) => {
+        DeleteRequest( //Delete Book function
+            "http://localhost:3000/api/deleteBook", Obj,
+
+            setIsLoading,
+            setIsOpen,
+            setMessage,
+            dispatch(
+                deleteBook(Obj.id)
+            )
+        )
+    }
+   
     useEffect(() => {
-        if (membersList) {
+        if (booksList.success) {
             setIsLoading(false)
 
-        } else if (membersList.error) {
+        } else if (booksList.error) {
             setIsOpen(true)
             setIsLoading(false)
-            setMessage({ title: 'Network Error', err: error })
+            setMessage({ 
+                title: 'Empty', 
+                msg: booksList.error 
+            })
         }
-    }, [membersList])
+    }, [booksList])
 
 
 
@@ -50,7 +61,7 @@ export const BooksTable = () => {
             </thead>
             <tbody>
                 {isLoading ? <tr><td>Loading...</td></tr> :
-                    membersList.success && membersList.success.map((book, index) => {
+                    booksList.success && booksList.success.map((book, index) => {
                         return (
                             <tr className="text-capitalize" role='button' key={index}>
                                 <td>
@@ -62,7 +73,9 @@ export const BooksTable = () => {
                                 <td className='pt-3'>{book.edition}</td>
                                 <td className='pt-3'>
                                     <Icon.Pencil className='me-4' onClick={() => updateBook(book)} />
-                                    <Icon.Trash onDoubleClick={() => removeBook(book._id)} />
+                                    {isLoading ? <p>Deleting...</p> :
+                                        <Icon.Trash onDoubleClick={() => deleteBooks({ id: book.id, filename: book.filename })} />
+                                    }
                                 </td>
                             </tr>
                         )
@@ -70,7 +83,7 @@ export const BooksTable = () => {
                 }
             </tbody>
             <PopUp
-                message={message.err}
+                message={message.msg}
                 title={message.title}
                 action={isOpen}
                 onclick={() => setIsOpen(false)}

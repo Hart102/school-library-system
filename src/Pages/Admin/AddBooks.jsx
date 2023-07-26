@@ -1,12 +1,12 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { addBook, updateBook } from "../../Reducers/Book";
+import { updateBook } from "../../Reducers/Book";
+import { PostRequest } from "../../components/APIs/PostRequest";
 import Button from "../../components/Button/Button";
 import { FormInput } from "../../components/FormInput";
 import PopUp from "../../components/Modal/PopUp";
-import { Title } from "../../components/Title";
+import Title from "../../components/Title";
 import FormLayout from "../../layout/FormLayout";
 
 
@@ -14,7 +14,6 @@ const AddBooks = () => {
 
     const dispatch = useDispatch();
     const location = useLocation();
-    const booksList = useSelector((state) => state.books.value);
     const [bookToUpdate, setBookToUpdate] = useState(location.state);
 
     const [id, setId] = useState('')
@@ -66,77 +65,63 @@ const AddBooks = () => {
     }
 
 
-    let api, response, data;
-
-    const registerBooks = async () => {
-        api = "http://localhost:3000/api/registerBooks";
-        response = await axios.post(api, formData);
-        data = response.data;
-
-        if(!data) setIsLoading(true);
-
-        if (data.success) {
-
-            dispatch(
-                addBook({
-                    file,
-                    ISBN,
-                    pages,
-                    title,
-                    length,
-                    author,
-                    edition,
-                    subject,
-                    publisher,
-                    totalBooks,
-                    description,
-                })
-            )
-            clearInputs()
-            setIsLoading(false);
-            setMessage({ title: 'Success', msg: data.success })
-        } else {
-            console.log(data)
-        }
-    }
-
-    const update = async () => {
-        api = "http://localhost:3000/api/editBook";
-        response = await axios.post(api, formData);
-        data = response.data
-
-        if(!data) setIsLoading(true);
-
-        if (data.success) {
-            dispatch(
-                updateBook({
-                    id,
-                    ISBN,
-                    pages,
-                    title,
-                    length,
-                    author,
-                    edition,
-                    subject,
-                    publisher,
-                    totalBooks,
-                    description,
-                })
-            )
-            clearInputs()
-            setIsLoading(false)
-            setMessage({ title: 'Success', msg: data.success })
-        } else {
-            console.log(data)
-        }
-    }
-
-
-
     const SubmitForm = (event) => {
         event.preventDefault();
-        if (!bookToUpdate) return registerBooks()
-        update()
+
+        // Books registration function 
+        if (!bookToUpdate) {
+            PostRequest(
+                "http://localhost:3000/api/registerBooks", formData,
+
+                setIsLoading,
+                setIsModalOpen,
+                clearInputs,
+                setMessage,
+
+                // dispatch(
+                //     addBook({
+                //         file,
+                //         ISBN,
+                //         pages,
+                //         title,
+                //         length,
+                //         author,
+                //         edition,
+                //         subject,
+                //         publisher,
+                //         totalBooks,
+                //         description,
+                //     })
+                // ),
+            )
+
+        } else {
+            // Update book function 
+            PostRequest(
+                "http://localhost:3000/api/editBook", formData,
+
+                setIsLoading,
+                setIsModalOpen,
+                clearInputs,
+                setMessage,
+
+                dispatch(
+                    updateBook({
+                        id,
+                        ISBN,
+                        pages,
+                        title,
+                        length,
+                        author,
+                        edition,
+                        subject,
+                        publisher,
+                        totalBooks,
+                        description
+                    })
+                )
+            )
+        }
     }
 
     useEffect(() => {

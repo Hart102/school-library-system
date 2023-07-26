@@ -1,7 +1,7 @@
 import * as Icon from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import { LinkObect } from './LinkObect';
-import { Title } from '../Title';
+import Title from '../Title';
 import Button from '../Button/Button'
 
 

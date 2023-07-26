@@ -17,7 +17,7 @@ export const SearchBooks = () => {
 
     const handleSearch = (e) => {
         setQuery(e.target.value)
-        setResult(SearchFunction(booksList, query))
+        setResult(SearchFunction(booksList.success, query))
     }
 
     const updateBook = (book) => {
@@ -45,11 +45,11 @@ export const SearchBooks = () => {
                 {result ? result.map((book) => (
                     <div key={book._id}>
                         <SearchResult
-                            name={book.bookTitle}
+                            name={book.title}
                             option={book.edition}
-                            image={book.coverImage}
+                            image={`/uploads/${book.filename}`}
                             onclick={() => updateBook(book)}
-                            ondoubleclick={() => removeBook(book._id)}
+                            ondoubleclick={() => removeBook(book.id)}
                         />
                     </div>
                 )) : null}

@@ -3,14 +3,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const BookSlice = createSlice({
     name: "books",
-    initialState: { value: '' },
+    initialState: { value: [] },
     reducers: {
         getBooks: (state, action) => {
             state.value = action.payload
         },
 
         addBook: (state, action) => {
-            state.value.success.push(action.payload);
+            if(state.value.success){
+                state.value.success.push(action.payload.bookObject);
+            }
         },
 
         updateBook: (state, action) => {
@@ -34,7 +36,7 @@ export const BookSlice = createSlice({
         },
 
         deleteBook: (state, action) => {
-            state.value = state.value.filter((book) => book._id !== action.payload);
+            state.value.success = state.value.success.filter((book) => book.id !== action.payload);
         }
     }
 })

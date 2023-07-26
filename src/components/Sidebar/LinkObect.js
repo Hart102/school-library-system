@@ -21,5 +21,10 @@ export const LinkObect = [
         text: 'add books',
         icon: Icon.BookmarkPlus
     },
+    {
+        location: '/dashboard/lendBooks',
+        text: 'lend books',
+        icon: Icon.DatabaseFillAdd
+    },
 ]
 // /dashboard/member/profile
