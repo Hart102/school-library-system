@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { updateBook } from "../../Reducers/Book";
 import { PostRequest } from "../../components/APIs/PostRequest";
@@ -45,8 +45,6 @@ const AddBooks = () => {
     formData.append('publisher', publisher);
     formData.append('totalBooks', totalBooks);
     formData.append('description', description);
-
-
     // Capture the name of the old image to replaced if the user provides a new image
     formData.append('oldFileName', bookToUpdate && bookToUpdate.filename)
 
@@ -228,22 +226,3 @@ const AddBooks = () => {
 }
 
 export default AddBooks
-
- // if (bookToUpdate) {
-        //     dispatch(
-        //         updateBook({
-        //             pages,
-        //             edition,
-        //             subject,
-        //             title,
-        //             publisher,
-        //             totalBooks,
-        //             // ...bookObect,
-        //             // _id: bookToUpdate._id
-        //         })
-        //     )
-        //     clearInputs()
-        // } else {
-        //     dispatch(addBook(bookObect))
-        //     clearInputs()
-        // }

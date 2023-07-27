@@ -20,7 +20,7 @@ const Overview = () => {
             id: 'second-icon',
             title: 'total books',
             icon: Icon.Book,
-            text: booksList 
+            text: booksList
         },
         {
             id: 'third-icon',
@@ -39,7 +39,7 @@ const Overview = () => {
             {overViewData.map((content, index) => (
                 <div className='col-md-4' key={index}>
                     <Card
-                        text={content.text.success ? content.text.success.length :<p>Loading...</p>}
+                        text={content.text.success ? content.text.success.length : <p className='fw-light fs-6'>Loading...</p>}
                         title={content.title}
                         className={`icon ${content.id}`}
                         icon={<content.icon color="white" />}

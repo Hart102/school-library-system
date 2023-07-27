@@ -7,7 +7,7 @@ export const TableLayout = ({ children }) => {
 
 export const ResponsiveTable = ({ children }) => {
   return (
-    <div className="table-responsive bg-white">
+    <div className="table-responsive">
       {children}
     </div>
   )

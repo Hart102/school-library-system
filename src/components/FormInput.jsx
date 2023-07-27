@@ -1,9 +1,8 @@
-const FormInput = ({ label, value, inputRef, type, placeholder, onchange }) => {
+const FormInput = ({ label, value, inputRef, type, placeholder, onchange, className }) => {
     return (
         <div className="col-md-5 mb-3">
             <label
-                htmlFor={label}
-                className="text-capitalize fw-light">
+                htmlFor={label} className="text-capitalize fw-light">
                 {label}
             </label>
             <br />
@@ -11,10 +10,11 @@ const FormInput = ({ label, value, inputRef, type, placeholder, onchange }) => {
                 type={type}
                 value={value}
                 ref={inputRef}
-                placeholder={placeholder}
                 onChange={onchange}
-                className="form-control bg-transparent"
+                placeholder={placeholder}
+                className={`form-control bg-transparent ${className}`}
             />
+
         </div>
     )
 }

@@ -12,20 +12,27 @@ const Members = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [message, setMessage] = useState('');
-    const [isModelOpen, setIsModelOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(true);
-    const membersList = useSelector((state) => state.members.value)
+    const [isModelOpen, setIsModelOpen] = useState(false);
+    const membersList = useSelector((state) => state.members.value);
 
+    // Redirect to update members profile page
     const updatePofile = (member) => {
-        navigate('/dashboard/add/member', { state: member })
+        navigate(
+            '/dashboard/add/member', { state: member }
+        )
     }
 
+    // Redirect to view members profile page
     const viewProfile = (member) => {
-        navigate('/dashboard/member/profile', { state: member })
+        navigate(
+            '/dashboard/member/profile', { state: member }
+        )
     }
 
+    //Delete Book function
     const deleteMembers = (Obj) => {
-        DeleteRequest( //Delete Book function
+        DeleteRequest( 
             "http://localhost:3000/api/deleteMember", Obj,
 
             setIsLoading,
@@ -35,6 +42,7 @@ const Members = () => {
         )
     }
 
+    // Load members when the page refresh
     useEffect(() => {
         if (membersList.success) {
             setIsLoading(false)
