@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { updateBook } from "../../Reducers/Book";
 import { PostRequest } from "../../components/APIs/PostRequest";
 import Button from "../../components/Button/Button";
-import { FormInput } from "../../components/FormInput";
+import FormInput from "../../components/FormInput";
 import PopUp from "../../components/Modal/PopUp";
 import Title from "../../components/Title";
 import FormLayout from "../../layout/FormLayout";

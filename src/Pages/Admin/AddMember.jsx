@@ -1,16 +1,15 @@
-import axios from "axios"
 import React, { useEffect, useRef, useState } from "react"
 import * as Icon from 'react-bootstrap-icons'
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
-import { addMembers, upDateMember } from "../../Reducers/membersReducer"
+import { upDateMember } from "../../Reducers/membersReducer"
+import { PostRequest } from "../../components/APIs/PostRequest"
 import Button from "../../components/Button/Button"
 import { Camera, ImagePreview } from "../../components/Camera/Camera"
-import { FormInput } from "../../components/FormInput"
+import FormInput from "../../components/FormInput"
 import PopUp from "../../components/Modal/PopUp"
 import Title from "../../components/Title"
 import FormLayout from "../../layout/FormLayout"
-import { PostRequest } from "../../components/APIs/PostRequest"
 
 const AddMember = () => {
 

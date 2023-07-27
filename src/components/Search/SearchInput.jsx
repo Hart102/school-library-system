@@ -1,8 +1,8 @@
 import * as Icon from 'react-bootstrap-icons';
 
-export const SearchInput = ({ inputRef, placeholder, onchange }) => {
+export const SearchInput = ({ size, inputRef, placeholder, onchange }) => {
     return (
-        <form className="form-group d-flex align-items-center px-3 py-1 my-1 border rounded col-md-12">
+        <form className={`form-group d-flex align-items-center px-3 py-1 my-1 border rounded ${size}`}>
             <Icon.Search />
             <input
                 ref={inputRef}

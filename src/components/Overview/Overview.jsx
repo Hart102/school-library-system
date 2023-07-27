@@ -9,8 +9,6 @@ const Overview = () => {
     const membersList = useSelector((state) => state.members.value)
     const booksList = useSelector((state) => state.books.value)
 
-
-
     const overViewData = [
         {
             id: 'first-icon',
@@ -38,17 +36,16 @@ const Overview = () => {
             <span className="border-bottom"></span>
             <span className="mb-3"></span>
 
-            {/* {overViewData.map((content, index) => (
-
+            {overViewData.map((content, index) => (
                 <div className='col-md-4' key={index}>
                     <Card
-                        text={content.text.success.length}
+                        text={content.text.success ? content.text.success.length :<p>Loading...</p>}
                         title={content.title}
                         className={`icon ${content.id}`}
                         icon={<content.icon color="white" />}
                     />
                 </div>
-            ))} */}
+            ))}
         </section>
     )
 }

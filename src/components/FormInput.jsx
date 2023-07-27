@@ -1,4 +1,4 @@
-export const FormInput = ({ label, value, inputRef, type, placeholder, onchange }) => {
+const FormInput = ({ label, value, inputRef, type, placeholder, onchange }) => {
     return (
         <div className="col-md-5 mb-3">
             <label
@@ -18,3 +18,5 @@ export const FormInput = ({ label, value, inputRef, type, placeholder, onchange 
         </div>
     )
 }
+
+export default FormInput
