@@ -1,6 +1,6 @@
 import { BooksTable } from "../../components/BooksTable/BooksTable"
 import Overview from '../../components/Overview/Overview'
-import { SearchBooks } from "../../components/Search/SearchBooks"
+import SearchBooks from "../../components/Search/SearchBooks"
 import { TableLayout, ResponsiveTable, Table } from "../../components/Table/Table"
 
 

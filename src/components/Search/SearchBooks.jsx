@@ -6,7 +6,7 @@ import { SearchFunction } from './SearchFunction';
 import { SearchInput } from './SearchInput';
 import { SearchResult, SearchResultContainer } from './SearchResult';
 
-export const SearchBooks = () => {
+const SearchBooks = () => {
 
     const inputRef = useRef(null);
     const navigate = useNavigate();
@@ -57,3 +57,4 @@ export const SearchBooks = () => {
         </>
     )
 }
+export default SearchBooks;

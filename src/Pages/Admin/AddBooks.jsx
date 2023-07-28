@@ -205,7 +205,7 @@ const AddBooks = () => {
 
                 <textarea
                     value={description || ''}
-                    className="form-control fw-light"
+                    className="form-control1 border fw-light col-md-7 me-lg-5 ms-lg-2 py-3"
                     placeholder="Write book description"
                     onChange={(e) => setDescription(e.target.value)}>
                 </textarea>

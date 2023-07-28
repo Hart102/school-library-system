@@ -6,7 +6,7 @@ import { SearchFunction } from './SearchFunction';
 import { SearchInput } from './SearchInput';
 import { SearchResult, SearchResultContainer } from './SearchResult';
 
-export const SearchMembers = () => {
+const SearchMembers = ({ addBookFunction }) => {
 
     const inputRef = useRef(null);
     const navigate = useNavigate();
@@ -17,7 +17,7 @@ export const SearchMembers = () => {
 
     const handleSearch = (e) => {
         setQuery(e.target.value)
-        if(membersList && membersList.success){
+        if (membersList && membersList.success) {
             setResult(SearchFunction(membersList.success, query))
         }
     }
@@ -33,11 +33,13 @@ export const SearchMembers = () => {
         setQuery('')
     }
 
+
+
     return (
         <>
             <SearchInput
                 inputRef={inputRef}
-                placeholder='Search books by name ...'
+                placeholder='Search for members ...'
                 onchange={(event) => handleSearch(event)}
             />
 
@@ -49,6 +51,7 @@ export const SearchMembers = () => {
                             name={member.FullName}
                             option={member.RegNo}
                             image={member.Profile}
+                            addBook={addBookFunction}
                             onclick={() => updatePofile(member)}
                             ondoubleclick={() => removeMember(member._id)}
                         />
@@ -58,3 +61,5 @@ export const SearchMembers = () => {
         </>
     )
 }
+
+export default SearchMembers

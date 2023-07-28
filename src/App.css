@@ -48,6 +48,10 @@ label {
   color: var(--TextColor) !important;
 }
 
+.search-result{
+  width: 800px;
+}
+
 tr img,
 .search-result img {
   width: 40px;

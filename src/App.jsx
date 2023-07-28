@@ -7,13 +7,13 @@ import './App.css';
 import AddBooks from './Pages/Admin/AddBooks';
 import AddMember from './Pages/Admin/AddMember';
 import Books from './Pages/Admin/Books';
-import Content from './components/Content';
-import MainLayout from './layout/MainLayout';
-import Index from './Pages/Admin/Index'
-import Profile from './components/Profile/Profile';
+import Index from './Pages/Admin/Index';
 import LendBooks from './components/LendBooks/LendBooks';
+import Profile from './components/Profile/Profile';
+import ContentLayOut from './layout/ContentLayOut';
+import MainLayout from './layout/MainLayout';
 
-import { getAllMembers, getAllBooks } from './components/APIs/Api';
+import { getAllBooks, getAllMembers } from './components/APIs/Api';
 
 
 const App = () => {
@@ -26,7 +26,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />}>
-          <Route element={<Content />}>
+          <Route element={<ContentLayOut />}>
             <Route index path='/' element={<Index />} />
             <Route path='/dashboard/books' element={<Books />} />
             <Route path='/dashboard/add/books' element={<AddBooks />} />

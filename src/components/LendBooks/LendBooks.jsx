@@ -1,45 +1,31 @@
-import * as Icon from 'react-bootstrap-icons'
-import { SearchInput } from '../Search/SearchInput'
-import Title from '../Title'
+import Button from '../Button/Button'
 import FormInput from '../FormInput'
-import FormLayout from '../../layout/FormLayout'
-import { useState } from 'react'
+import SearchBooks from '../Search/SearchBooks'
+import SearchMembers from '../Search/SearchMembers'
+import Title from '../Title'
 
 const LendBooks = () => {
-    const [error, setError] = useState('')
-    const errorStyle = "border: 1px solid red"
+
+
+    // const [id, setId] = useState({membersId: '', bookId: ''})
+
+    // const addBookToUserRecord = (bookId) => {
+    //     console.log(id)
+    // }
+
     return (
-        <FormLayout>
-            <div className='px-lg-5'>
+        <section className="bg-white p-5 h-100">
+            <div className='col-md-9 d-flex flex-column p-lg-5 h-100'>
                 <Title text='lend book' />
-                <p className='mb-5'>Member can only borrow four books at a time</p>
-
-                <div className="d-flex flex-wrap justify-content-between">
-                    <SearchInput size='col-md-5' placeholder={'Search for members...'} />
-                    <SearchInput size='col-md-5' placeholder={'Search for books...'} />
-                </div>
-
-                <div className="my-3">
-                    <FormInput type="date" label="Date to return book" className="py-2"/>
-
+                <p className='mb-3 fw-light'>Member can only borrow four books at a time</p>
+                <SearchMembers  /> <br /><SearchBooks />
+                <br />
+                <div className="d-flex justify-content-between align-items-center">
+                    <FormInput type="date" label="Date to return book" className="py-2" />
+                    <span><Button btnText="Add" /></span>
                 </div>
             </div>
-
-
-        </FormLayout>
-
-
-
-        // <div className="container bg-white p-4">
-        //     <div className='px-lg-5'>
-        //         <Title text='lend book'/>
-        //         <p className='my-3'>Member can only borrow four books at a time</p>
-        //     </div>
-        //     <div className='d-lg-flex justify-content-around'>
-        //         <SearchInput size='col-md-5' placeholder={'Search for members...'}/>
-        //         <SearchInput size='col-md-5' placeholder={'Search for books...'}/>
-        //     </div>
-        // </div>
+        </section>
 
     )
 }
