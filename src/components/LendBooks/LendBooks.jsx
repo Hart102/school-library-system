@@ -10,12 +10,12 @@ import SearchBooks from '../Search/SearchBooks'
 import SearchMembers from '../Search/SearchMembers'
 import Title from '../Title'
 import { getSingleBook } from '../../Reducers/Book'
-import { getSingleMember } from '../../Reducers/membersReducer'
+import { borrowBooks, getSingleMember } from '../../Reducers/membersReducer'
 
 const LendBooks = () => {
     const dispatch = useDispatch();
     const { member } = useSelector((state) => state.members);
-    const { book } = useSelector((state) => state.books);
+    const { value, book } = useSelector((state) => state.books);
 
     const [bookReturningDate, setBookReturningDate] = useState('')
     const [message, setMessage] = useState('');
@@ -41,19 +41,28 @@ const LendBooks = () => {
                 setMessage,
             )
         }
-
-        // If request is successful, then clear object used in making request
-        if (message.title == 'success') {
-            dispatch(getSingleBook(''))
-            dispatch(getSingleMember(''))
-        }
     }
 
     useEffect(() => {
         dispatch( // Activate the add books and members icon
             hideAddButton(true)
         )
-    }, [])
+
+        if(message.title == "success"){
+            // If request is successful, then clear object used in making request
+            dispatch(getSingleBook(''))
+            dispatch(getSingleMember(''))
+
+            // Dispatch action here by adding the borrowed book in the client side using redux
+            const borrowedBook = value.success.filter((article) => article.id == book.id)[0]
+            dispatch(
+                borrowBooks({
+                    _id: member._id,
+                    borrowedBook
+                })
+            )
+        }
+    }, [message])
 
     return (
         <>

@@ -16,6 +16,20 @@ body {
 }
 
 
+/* Reused styling  */
+tr img,
+.search-result img {
+  width: 40px;
+  height: 40px;
+  border-radius: 30px
+}
+
+.search-result>div,
+.books-container {
+  background: var(--Ash);
+}
+
+
 
 /* -------------------------- */
 /* MAIN LAYOUT STYLING */
@@ -48,14 +62,6 @@ label {
   color: var(--TextColor) !important;
 }
 
-/* Reused styling  */
-tr img,
-.search-result img {
-  width: 40px;
-  height: 40px;
-  border-radius: 30px
-}
-
 input,
 button {
   outline: none !important;
@@ -64,19 +70,20 @@ button {
 
 button,
 .btn {
+  font-size: 0.86em !important;
   border: 1px dotted var(--Green) !important;
 }
 
 .image-preview>div {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   margin: auto;
   border-radius: 100%;
   overflow: hidden;
   border: 1px dotted var(--Green);
 }
 
-.actionBtn{
+.actionBtn {
   color: var(--Ash);
   background: green;
   border-radius: 30px;
@@ -207,12 +214,6 @@ thead {
 }
 
 
-/* --------------------------- */
-/* SEARCH COMPONENT STYLING */
-/* -------------------------- */
-.search-result>div {
-  background: var(--Ash);
-}
 
 
 /* --------------------------- */

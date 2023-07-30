@@ -110,17 +110,3 @@ const Members = () => {
 }
 
 export default Members
-
-// onDoubleClick={() => viewProfile(member)}
-
- // if (membersList.success) {
-        //     setIsLoading(false)
-
-        // } else if (membersList.error) {
-        //     setIsModelOpen(true)
-        //     setIsLoading(false)
-        //     setMessage({
-        //         title: 'Network Error',
-        //         err: membersList.error
-        //     })
-        // }

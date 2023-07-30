@@ -1,16 +1,19 @@
 import * as Icon from "react-bootstrap-icons"
 
+// Books display container styling 
 export const BooksContainer = ({ children }) => {
-    <div
-        className="row gap-5 justify-content-center profile-book-display w-100">
-        <b className="text-center">Books</b>
-        {children}
-    </div>
+    return (
+        <div className="row gap-5 justify-content-center profile-book-display w-100">
+            <b className="text-center text-uppercase">Borrowed Books</b>
+            {children}
+        </div>
+    )
 }
 
+// Book display component styling
 export const BooksContent = ({ BookObject, onclick }) => {
     return (
-        <div className="col-md-9 d-lg-flex shadow-sm p-3">
+        <div className="books-container col-md-11 d-lg-flex shadow-sm p-3 rounded">
             <div className="book-image-preview">
                 <img src={`/uploads/${BookObject.filename}`} className="img-fluid rounded" alt="image" />
             </div>
