@@ -36,7 +36,7 @@ tr,
 th,
 input,
 label {
-  font-size: 0.89em !important;
+  font-size: 0.88em !important;
 }
 
 h1,
@@ -48,10 +48,7 @@ label {
   color: var(--TextColor) !important;
 }
 
-.search-result{
-  width: 800px;
-}
-
+/* Reused styling  */
 tr img,
 .search-result img {
   width: 40px;
@@ -77,6 +74,15 @@ button,
   border-radius: 100%;
   overflow: hidden;
   border: 1px dotted var(--Green);
+}
+
+.actionBtn{
+  color: var(--Ash);
+  background: green;
+  border-radius: 30px;
+  padding: 0.3em;
+  width: 30px;
+  height: 30px;
 }
 
 
@@ -231,7 +237,8 @@ thead {
 
   nav,
   .sidebar,
-  .content {
+  .content,
+  .search-result {
     width: 100%;
   }
 

@@ -1,11 +1,13 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import * as Icon from 'react-bootstrap-icons'
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { deleteMember } from '../../Reducers/membersReducer'
+import DeleteRequest from '../Modules/DeleteRequest'
 import PopUp from '../Modal/PopUp'
-import DeleteRequest from '../APIs/DeleteRequest'
+import LoadingFunction from '../Modules/LoadingFunction'
+import { hideAddButton } from "../../Reducers/Book"
+
 
 const Members = () => {
 
@@ -16,7 +18,7 @@ const Members = () => {
     const [isModelOpen, setIsModelOpen] = useState(false);
     const membersList = useSelector((state) => state.members.value);
 
-    // Redirect to update members profile page
+    // Redirect to update members profile page with members data
     const updatePofile = (member) => {
         navigate(
             '/dashboard/add/member', { state: member }
@@ -24,15 +26,15 @@ const Members = () => {
     }
 
     // Redirect to view members profile page
-    const viewProfile = (member) => {
+    const viewProfile = (memberId) => {
         navigate(
-            '/dashboard/member/profile', { state: member }
+            '/dashboard/member/profile', { state: memberId }
         )
     }
 
     //Delete Book function
     const deleteMembers = (Obj) => {
-        DeleteRequest( 
+        DeleteRequest(
             "http://localhost:3000/api/deleteMember", Obj,
 
             setIsLoading,
@@ -42,19 +44,18 @@ const Members = () => {
         )
     }
 
+ 
     // Load members when the page refresh
     useEffect(() => {
-        if (membersList.success) {
-            setIsLoading(false)
-
-        } else if (membersList.error) {
-            setIsModelOpen(true)
-            setIsLoading(false)
-            setMessage({
-                title: 'Network Error',
-                err: membersList.error
-            })
-        }
+        LoadingFunction(
+            membersList,
+            setIsLoading,
+            setIsModelOpen,
+            setMessage,
+            dispatch(
+                hideAddButton(false)
+            )
+        )
     }, [membersList])
 
     return (
@@ -79,15 +80,17 @@ const Members = () => {
                             <td className='pt-3'>{member.RegNo}</td>
                             <td className='pt-3'>{member.Department}</td>
                             <td className='pt-3'>{member.College}</td>
-                            <td className='pt-3'>
+                            <td className='pt-3 d-flex flex-lg-row flex-column'>
+                                <Icon.Person onClick={() => viewProfile(member._id)}/>
                                 <Icon.Pencil
-                                    className='me-4'
                                     role='button'
+                                    className='mx-lg-4 my-lg-0 my-3'
                                     onClick={() => updatePofile(member)}
                                 />
                                 {isLoading ? <p>Loading...</p> :
                                     <Icon.Trash
                                         role='button'
+                                        className=''
                                         onDoubleClick={() => deleteMembers({ id: member._id })}
                                     />
                                 }
@@ -109,3 +112,15 @@ const Members = () => {
 export default Members
 
 // onDoubleClick={() => viewProfile(member)}
+
+ // if (membersList.success) {
+        //     setIsLoading(false)
+
+        // } else if (membersList.error) {
+        //     setIsModelOpen(true)
+        //     setIsLoading(false)
+        //     setMessage({
+        //         title: 'Network Error',
+        //         err: membersList.error
+        //     })
+        // }

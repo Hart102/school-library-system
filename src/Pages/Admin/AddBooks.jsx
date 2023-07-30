@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { updateBook } from "../../Reducers/Book";
-import { PostRequest } from "../../components/APIs/PostRequest";
+import { PostRequest } from "../../components/Modules/PostRequest";
 import Button from "../../components/Button/Button";
 import FormInput from "../../components/FormInput";
 import PopUp from "../../components/Modal/PopUp";
@@ -200,6 +200,7 @@ const AddBooks = () => {
 
                 <FormInput
                     type='file'
+                    className='custom-file-input'
                     onchange={(e) => setFile(e.target.files[0])}
                 />
 

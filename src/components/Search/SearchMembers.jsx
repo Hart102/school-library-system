@@ -1,12 +1,12 @@
 import { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { deleteMember } from '../../Reducers/membersReducer';
+import { getSingleMember, deleteMember } from '../../Reducers/membersReducer';
 import { SearchFunction } from './SearchFunction';
 import { SearchInput } from './SearchInput';
 import { SearchResult, SearchResultContainer } from './SearchResult';
 
-const SearchMembers = ({ addBookFunction }) => {
+const SearchMembers = () => {
 
     const inputRef = useRef(null);
     const navigate = useNavigate();
@@ -34,6 +34,17 @@ const SearchMembers = ({ addBookFunction }) => {
     }
 
 
+    /* The work of this function is to select the member who wants to borrow book 
+    This function takes the id of push the id's of the member who wants borrow book
+    and the id  of the book the member wants to borrow to the reducer where it is joined together,
+    to be used in making an Api call to the server.
+    */
+    const selectMember = (member) => {
+        dispatch(getSingleMember(member))
+        inputRef.current.value = ''
+        setQuery('')
+    }
+
 
     return (
         <>
@@ -51,8 +62,8 @@ const SearchMembers = ({ addBookFunction }) => {
                             name={member.FullName}
                             option={member.RegNo}
                             image={member.Profile}
-                            addBook={addBookFunction}
                             onclick={() => updatePofile(member)}
+                            getIdFunction={() => selectMember({ RegNo: member.RegNo, id: member._id })}
                             ondoubleclick={() => removeMember(member._id)}
                         />
                     </div>

@@ -12,9 +12,9 @@ export const PostRequest = async (
     setMessage,
     dispatchAction,
 ) => {
-    let request, response;
 
     // Make a post request using the provided api and data
+    let request, response;
     request = await axios.post(url, info);
     response = request.data;
 
@@ -23,7 +23,8 @@ export const PostRequest = async (
 
     /*if Successful, clear InputBoxes, dispatch actions in redux, 
     set isloading to false, display a model box for successful Message 
-    and set the message that is displayed in model */
+    and set the message that is displayed in model 
+    */
     if (response.success) {
         clearInput()
         dispatchAction
@@ -34,9 +35,17 @@ export const PostRequest = async (
             msg: response.success
         })
 
-    } else {
-        /* if not successfule, open the model and 
-        display error Message, set isLoading to false */
+        // If warning 
+    } else if (response.warning) {
+        isModalOpen(true)
+        setIsLoading(false)
+        setMessage({
+            title: "Warning",
+            msg: response.warning
+        })
+
+    } else { // If not successfule
+
         isModalOpen(true)
         setIsLoading(false)
         setMessage({

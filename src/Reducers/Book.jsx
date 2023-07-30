@@ -1,16 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import { DemoBooks } from "../components/DemoData";
 
 export const BookSlice = createSlice({
     name: "books",
-    initialState: { value: [] },
+    initialState: { value: [], book: '', isLendBookPage: false },
     reducers: {
         getBooks: (state, action) => {
             state.value = action.payload
         },
 
-        addBook: (state, action) => {
-            if(state.value.success){
+        addBook: (state, action) => { //Not working for now
+            if (state.value.success) {
                 state.value.success.push(action.payload.bookObject);
             }
         },
@@ -36,10 +35,27 @@ export const BookSlice = createSlice({
         },
 
         deleteBook: (state, action) => {
-            state.value.success = state.value.success.filter((book) => book.id !== action.payload);
+            state.value.success = 
+            state.value.success.filter((book) => book.id !== action.payload);
+        },
+
+
+        getSingleBook: (state, action) => {
+            state.book = action.payload;
+        },
+
+        hideAddButton: (state, action) => {
+            state.isLendBookPage = action.payload
         }
     }
 })
 
-export const { getBooks, addBook, updateBook, deleteBook } = BookSlice.actions;
+export const { 
+    getBooks, 
+    addBook, 
+    updateBook,
+    getSingleBook,
+    deleteBook, 
+    hideAddButton 
+} = BookSlice.actions;
 export default BookSlice.reducer;

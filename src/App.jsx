@@ -13,7 +13,7 @@ import Profile from './components/Profile/Profile';
 import ContentLayOut from './layout/ContentLayOut';
 import MainLayout from './layout/MainLayout';
 
-import { getAllBooks, getAllMembers } from './components/APIs/Api';
+import { getAllBooks, getAllMembers } from './components/Modules/Api';
 
 
 const App = () => {

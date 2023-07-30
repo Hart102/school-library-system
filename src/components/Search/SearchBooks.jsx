@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { deleteBook } from '../../Reducers/Book';
+import { deleteBook, getSingleBook } from '../../Reducers/Book';
 import { SearchFunction } from './SearchFunction';
 import { SearchInput } from './SearchInput';
 import { SearchResult, SearchResultContainer } from './SearchResult';
@@ -31,6 +31,17 @@ const SearchBooks = () => {
         setQuery('')
     }
 
+    /* The work of this function is to select the book who wants to borrow book 
+    This function takes the id of push the id's of the member who wants borrow book
+    and the id  of the book the member wants to borrow to the reducer where it is joined together,
+    to be used in making an Api call to the server.
+    */
+    const selectBook = (book) => {
+        dispatch(getSingleBook(book))
+        inputRef.current.value = ''
+        setQuery('')
+    }
+
 
     return (
         <>
@@ -49,6 +60,7 @@ const SearchBooks = () => {
                             option={book.edition}
                             image={`/uploads/${book.filename}`}
                             onclick={() => updateBook(book)}
+                            getIdFunction={() => selectBook({title: book.title, id: book.id})}
                             ondoubleclick={() => removeBook(book.id)}
                         />
                     </div>

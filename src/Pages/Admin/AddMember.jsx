@@ -3,7 +3,7 @@ import * as Icon from 'react-bootstrap-icons'
 import { useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
 import { upDateMember } from "../../Reducers/membersReducer"
-import { PostRequest } from "../../components/APIs/PostRequest"
+import { PostRequest } from "../../components/Modules/PostRequest"
 import Button from "../../components/Button/Button"
 import { Camera, ImagePreview } from "../../components/Camera/Camera"
 import FormInput from "../../components/FormInput"

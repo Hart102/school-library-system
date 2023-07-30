@@ -14,7 +14,7 @@ import { MembersData } from "../components/DemoData";
 // return
 export const membersSlice = createSlice({
     name: 'members',
-    initialState: { value: '' },
+    initialState: { value: '', member: '' },
 
     reducers: {
         getMembers: (state, action) => {
@@ -42,6 +42,10 @@ export const membersSlice = createSlice({
             })
         },
 
+        getSingleMember: (state, action) => {
+            state.member = action.payload;
+        },
+
         deleteMember: (state, action) => {
             state.value.success = state.value.success.filter((member) => member._id !== action.payload);
         },
@@ -52,7 +56,8 @@ export const membersSlice = createSlice({
 export const { 
     getMembers, 
     addMembers, 
-    upDateMember, 
+    upDateMember,
+    getSingleMember,
     deleteMember 
 } = membersSlice.actions;
 export default membersSlice.reducer;
