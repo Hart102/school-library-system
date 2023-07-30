@@ -148,8 +148,6 @@ const Profile = () => {
 
 
 
-
-
     // <>
     //   <section className="bg-white d-flex flex-column align-items-center p-5 text-uppercase">
     //     <div className="text-center">
