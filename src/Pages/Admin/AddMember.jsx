@@ -81,6 +81,7 @@ const AddMember = () => {
                 clearInput,
                 setMessage,
             )
+            if (isLoading) location.reload()
 
         } else {
             PostRequest( // Update profile function 
@@ -104,6 +105,10 @@ const AddMember = () => {
                     })
                 )
             )
+            // SWitch to register mode 
+            if (message.title == "success") {
+                setMemberToBeUpdated('')
+            }
         }
     }
 

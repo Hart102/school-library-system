@@ -1,19 +1,19 @@
-import Members from '../../components/Members/Members'
+import BorrowersTable from "../../components/BorrowersTable/BorrowersTable"
 import Overview from "../../components/Overview/Overview"
 import SearchMembers from "../../components/Search/SearchMembers"
-import { TableLayout, ResponsiveTable, Table } from "../../components/Table/Table"
-import Title from '../../components/Title'
+import { ResponsiveTable, Table, TableLayout } from "../../components/Table/Table"
+import Title from "../../components/Title"
 
-const Index = () => {
+const Borrowers = () => {
   return (
     <>
-      <Title text={"Members"} />
+      <Title text={"Borrowers"} />
       <Overview />
       <TableLayout >
         <SearchMembers />
         <ResponsiveTable>
           <Table>
-            <Members />
+            <BorrowersTable />
           </Table>
         </ResponsiveTable>
       </TableLayout>
@@ -21,4 +21,4 @@ const Index = () => {
   )
 }
 
-export default Index
+export default Borrowers

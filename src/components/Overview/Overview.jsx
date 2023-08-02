@@ -9,6 +9,12 @@ const Overview = () => {
     const membersList = useSelector((state) => state.members.value)
     const booksList = useSelector((state) => state.books.value)
 
+    let totalBorrowers;
+    if(membersList.success){
+        totalBorrowers = 
+        membersList.success.filter((member) => member.books.length > 0)
+    }
+
     const overViewData = [
         {
             id: 'first-icon',

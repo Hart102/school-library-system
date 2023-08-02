@@ -1,9 +1,17 @@
 import * as Icon from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
-import { LinkObect } from './LinkObect';
 import Title from '../Title';
 import Button from '../Button/Button'
 
+
+const LinkObect = [
+    { location: '/dashboard', text: 'members', icon: Icon.People },
+    { location: '/books', text: 'books', icon: Icon.Book },
+    { location: '/borrowers', text: 'borrowers', icon: Icon.People },
+    { location: '/add/member', text: 'add members', icon: Icon.PersonAdd },
+    { location: '/add/books', text: 'add books', icon: Icon.BookmarkPlus },
+    { location: '/lendBooks', text: 'lend books', icon: Icon.DatabaseFillAdd },
+]
 
 const Sidebar = ({ refName }) => {
     const closeSideBar = (sidebar) => {
@@ -24,7 +32,7 @@ const Sidebar = ({ refName }) => {
             </div>
             <div className="d-flex flex-column justify-content-between h-100">
                 <ul className='list-unstyled d-flex flex-column justify-content-around  py-4'>
-                    {LinkObect && LinkObect.map((link) => (
+                    {LinkObect.map((link) => (
                         <li className='nav-item text-capitalize' key={link.text} onClick={() => closeSideBar(refName.current)}>
                             <Link to={link.location} className='nav-link my-1 p-2 rounded-pill px-4' key={link.text}>
                                 <link.icon size={20} className='mb-1 me-2' />

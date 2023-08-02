@@ -8,9 +8,7 @@ import PopUp from '../Modal/PopUp'
 import DeleteRequest from '../Modules/DeleteRequest'
 import LoadingFunction from '../Modules/LoadingFunction'
 
-
-const Members = () => {
-
+const BorrowersTable = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [message, setMessage] = useState('');
@@ -44,6 +42,7 @@ const Members = () => {
         )
     }
 
+
     // Load members when the page refresh
     useEffect(() => {
         LoadingFunction(
@@ -56,8 +55,13 @@ const Members = () => {
             )
         )
 
-        
+        if (membersList.success) {
+            const filteredMembers =
+                membersList.success.filter((member) => member.books.length > 0);
+            setBorrowers(filteredMembers)
+        }
     }, [membersList])
+
 
     return (
         <>
@@ -110,4 +114,4 @@ const Members = () => {
     )
 }
 
-export default Members
+export default BorrowersTable

@@ -5,10 +5,8 @@ import { ImagePreview } from "../Camera/Camera"
 import PopUp from "../Modal/PopUp"
 import { PostRequest } from "../Modules/PostRequest"
 import { BooksContainer, BooksContent } from "./BooksContainer"
-import Card from "./Card"
 import ProfileContainer from './ProfileContainer'
 import Text from './Text'
-import { returnBookAction } from "../../Reducers/membersReducer"
 
 const Profile = () => {
   const location = useLocation();
@@ -33,11 +31,9 @@ const Profile = () => {
       setIsModalOpen,
       setClearInput,
       setMessage,
-      dispatch(returnBookAction({
-        _id: Obj._id,
-        bookId: Obj.bookId
-      }))
     )
+
+    if (isLoading) location.reload()
   }
 
 
@@ -48,14 +44,6 @@ const Profile = () => {
       let result = members.success.find((member) => member._id == location.state)
       setMember(result)
     }
-
-    // Remove book from members record if it was successful removed from the database
-    // if (message.title == "success") {
-    //   dispatch(returnBookAction({
-    //     _id: requestObject._id,
-    //     bookId: requestObject.bookId
-    //   }))
-    // }
 
   }, [members])
 

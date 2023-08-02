@@ -2,7 +2,7 @@ const FormInput = ({ label, value, inputRef, type, placeholder, onchange, classN
     return (
         <div className="col-md-5 mb-3">
             <label
-                htmlFor={label} className="text-capitalize fw-light">
+                htmlFor={label} className="text-capitalize">
                 {label}
             </label>
             <br />
@@ -14,7 +14,6 @@ const FormInput = ({ label, value, inputRef, type, placeholder, onchange, classN
                 placeholder={placeholder}
                 className={`form-control bg-transparent ${className}`}
             />
-
         </div>
     )
 }

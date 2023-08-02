@@ -75,23 +75,8 @@ const AddBooks = () => {
                 setIsModalOpen,
                 clearInputs,
                 setMessage,
-
-                // dispatch(
-                //     addBook({
-                //         file,
-                //         ISBN,
-                //         pages,
-                //         title,
-                //         length,
-                //         author,
-                //         edition,
-                //         subject,
-                //         publisher,
-                //         totalBooks,
-                //         description,
-                //     })
-                // ),
             )
+            if (isLoading) location.reload()
 
         } else {
             // Update book function 
@@ -119,6 +104,11 @@ const AddBooks = () => {
                     })
                 )
             )
+
+            // SWitch to register mode 
+            if (message.title == "success") {
+                setBookToUpdate('')
+            }
         }
     }
 
@@ -138,10 +128,6 @@ const AddBooks = () => {
             setDescription(bookToUpdate.description)
         }
     }, [bookToUpdate])
-
-
-
-
 
 
     return (
@@ -211,10 +197,12 @@ const AddBooks = () => {
                     onChange={(e) => setDescription(e.target.value)}>
                 </textarea>
 
-                <Button
-                    type='type'
-                    btnText={isLoading ? 'Loading...' : bookToUpdate ? 'Update Book' : 'Add Book'}
-                />
+                <div className="mt-5">
+                    <Button
+                        type='type'
+                        btnText={isLoading ? 'Loading...' : bookToUpdate ? 'Update Book' : 'Add Book'}
+                    />
+                </div>
             </FormLayout>
             <PopUp
                 action={isModalOpen}

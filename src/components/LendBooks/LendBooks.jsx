@@ -10,7 +10,7 @@ import SearchBooks from '../Search/SearchBooks'
 import SearchMembers from '../Search/SearchMembers'
 import Title from '../Title'
 import { getSingleBook } from '../../Reducers/Book'
-import { borrowBooks, getSingleMember } from '../../Reducers/membersReducer'
+import { getSingleMember } from '../../Reducers/membersReducer'
 
 const LendBooks = () => {
     const dispatch = useDispatch();
@@ -48,26 +48,18 @@ const LendBooks = () => {
             hideAddButton(true)
         )
 
+        // If request is successful, then clear object used in making request
         if(message.title == "success"){
-            // If request is successful, then clear object used in making request
             dispatch(getSingleBook(''))
             dispatch(getSingleMember(''))
-
-            // Dispatch action here by adding the borrowed book in the client side using redux
-            const borrowedBook = value.success.filter((article) => article.id == book.id)[0]
-            dispatch(
-                borrowBooks({
-                    _id: member._id,
-                    borrowedBook
-                })
-            )
+            setMessage('')
         }
     }, [message])
 
     return (
         <>
             <section className="col-md-10 mx-auto p-lg-5 h-100">
-                <div className=' shadow-sm bg-white rounded d-flex flex-column p-lg-5 p-5 mx-auto'>
+                <div className='shadow-sm bg-white rounded d-flex flex-column p-lg-5 p-5 mx-auto'>
                     <div className="text-center">
                         <Title text="lend book"/>
                         <p className='mb-3 fw-light'>Member can only borrow four books at a time</p>
