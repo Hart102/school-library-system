@@ -21,14 +21,14 @@ const Members = () => {
     // Redirect to update members profile page with members data
     const updatePofile = (member) => {
         navigate(
-            '/dashboard/add/member', { state: member }
+            '/add/member', { state: member }
         )
     }
 
     // Redirect to view members profile page
     const viewProfile = (memberId) => {
         navigate(
-            '/dashboard/member/profile', { state: memberId }
+            '/member/profile', { state: memberId }
         )
     }
 

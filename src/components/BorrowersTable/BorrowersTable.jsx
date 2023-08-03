@@ -15,6 +15,7 @@ const BorrowersTable = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isModelOpen, setIsModelOpen] = useState(false);
     const membersList = useSelector((state) => state.members.value);
+    const [borrowers, setBorrowers] = useState(membersList ? membersList.success : '')
 
     // Redirect to update members profile page with members data
     const updatePofile = (member) => {
@@ -26,7 +27,7 @@ const BorrowersTable = () => {
     // Redirect to view members profile page
     const viewProfile = (memberId) => {
         navigate(
-            '/dashboard/member/profile', { state: memberId }
+            '/member/profile', { state: memberId }
         )
     }
 
@@ -76,7 +77,7 @@ const BorrowersTable = () => {
             </thead>
             <tbody>
                 {isLoading ? <tr><td>Loading...</td></tr> :
-                    membersList.success && membersList.success.map((member, index) => (
+                   borrowers &&borrowers.map((member, index) => (
                         <tr className="text-capitalize" role='button' key={index} >
                             <td className='pe-5'>
                                 <img src={member.Profile} className='me-3' />

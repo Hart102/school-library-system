@@ -20,7 +20,7 @@ export const BooksTable = ({ displayAddIcon }) => {
 
     // Redirect to update Book update page with book data
     const updateBook = (book) => {
-        navigate("/dashboard/add/books", { state: book });
+        navigate("/add/books", { state: book });
     }
 
     //Delete Book function
@@ -58,8 +58,8 @@ export const BooksTable = ({ displayAddIcon }) => {
                 <tr>
                     <th>NAME</th>
                     <th>AUTHOR</th>
-                    <th>TOTAL BOOKS</th>
-                    <th>EDITION</th>
+                    <th>TOTAL COPIES</th>
+                    <th>BORROWED</th>
                     <th>ACTION</th>
                 </tr>
             </thead>
@@ -74,7 +74,7 @@ export const BooksTable = ({ displayAddIcon }) => {
                                 </td>
                                 <td className='pt-3'>{book.author}</td>
                                 <td className='pt-3'>{book.totalBooks}</td>
-                                <td className='pt-3'>{book.edition}</td>
+                                <td className='pt-3'>{Number(book.count)}</td>
                                 <td className='pt-3 d-flex flex-lg-row flex-column'>
                                     <Icon.Pencil
                                         className='mx-lg-4 my-lg-0 my-3'

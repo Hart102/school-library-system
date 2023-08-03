@@ -162,7 +162,7 @@ const AddBooks = () => {
 
                 <FormInput
                     label='total copy'
-                    type='text' value={totalBooks || ''}
+                    type='number' value={totalBooks || ''}
                     onchange={(e) => setTotalBooks(e.target.value.toLowerCase())}
                 />
 

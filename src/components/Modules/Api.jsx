@@ -9,13 +9,13 @@ let response;
 
 export const initializeSession = async () => {
     const dispatch = useDispatch();
-    const location = useLocation();
+    // const location = useLocation();
     const response = await axios.get("http://localhost:3000/api/adminLogin")
 
     // if login is successful or if session exist redirect user to dashboard
     if(!response.data.error){
         dispatch(getSession(response.data.success))
-        location('/dashboard')
+        // location('/dashboard')
     }
 }
 
