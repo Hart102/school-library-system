@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import * as Icon from 'react-bootstrap-icons'
 import { useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
-import { upDateMember } from "../../Reducers/membersReducer"
+import { addMembers, upDateMember } from "../../Reducers/membersReducer"
 import { PostRequest } from "../../components/Modules/PostRequest"
 import Button from "../../components/Button/Button"
 import { Camera, ImagePreview } from "../../components/Camera/Camera"
@@ -80,8 +80,20 @@ const AddMember = () => {
                 setIsModalOpen,
                 clearInput,
                 setMessage,
+
+                dispatch(
+                    addMembers({
+                        url,
+                        RegNo,
+                        Email,
+                        College,
+                        FullName,
+                        Department,
+                        YearOfAdmission
+                    })
+                )
             )
-            if (isLoading) location.reload()
+
 
         } else {
             PostRequest( // Update profile function 

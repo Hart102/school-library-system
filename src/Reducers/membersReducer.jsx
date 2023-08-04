@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const membersSlice = createSlice({
     name: 'members',
-    initialState: { value: '', member: '' },
+    initialState: { value: '', member: '', borrowers: '' },
 
     reducers: {
         // This action was used in Api component 
@@ -11,15 +11,16 @@ export const membersSlice = createSlice({
             state.value = action.payload
         },
 
-        addMembers: (state, action) => {// not working
-            state.value.success = state.value.success.push(action.payload)
+        // Add new members
+        addMembers: (state, action) => {
+            if (state.value.success) {
+                state.value.success.push(action.payload);
+            }
         },
 
         // This action was used in add member pages
         upDateMember: (state, action) => {
-
             state.value.success.map((member) => {
-
                 if (member._id == action.payload._id) {
                     member.Profile = action.payload.url;
                     member.RegNo = action.payload.RegNo;
@@ -29,7 +30,6 @@ export const membersSlice = createSlice({
                     member.Department = action.payload.Department;
                     member.YearOfAdmission = action.payload.YearOfAdmission;
                 }
-
             })
         },
 
@@ -43,6 +43,38 @@ export const membersSlice = createSlice({
             state.value.success =
                 state.value.success.filter((member) => member._id !== action.payload);
         },
+
+        // Add new books to members record 
+        // This function was used in the lend books page
+        borrowBooks: (state, action) => {
+            if (state.value.success) {
+                state.value.success.map((member) => {
+                    if (member.RegNo == action.payload.regNo) {
+                        member.books.push(action.payload.BorrowedBook)
+                    }
+                })
+            }
+        },
+
+        // Return books action 
+        // This function was used in the members profile page 
+        returnBookAction: (state, action) => {
+            if (state.value.success) {
+                state.value.success.map((member) => {
+                    if (member.RegNo == action.payload.regNo) {
+                        member.books.splice(member.books.findIndex(book => book.id === action.payload.bookId), 1);
+                    }
+                })
+            }
+        },
+
+        // This function was used in the borrowers component to get the total number of borrowers
+        countBorrowers: (state, action) => {
+            if (state.value.success) {
+                state.borrowers = {success: action.payload}
+            }
+        }
+
     }
 })
 
@@ -54,7 +86,8 @@ export const {
     getSingleMember,
     deleteMember,
     borrowBooks,
-    returnBookAction
+    returnBookAction,
+    countBorrowers
 } = membersSlice.actions;
 export default membersSlice.reducer;
 

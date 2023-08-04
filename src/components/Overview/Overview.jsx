@@ -4,36 +4,14 @@ import Title from "../Title"
 import { Card } from "./Card"
 
 
-
 const Overview = () => {
-    const membersList = useSelector((state) => state.members.value)
+    const { value, borrowers } = useSelector((state) => state.members)
     const booksList = useSelector((state) => state.books.value)
 
-    let totalBorrowers;
-    if(membersList.success){
-        totalBorrowers = 
-        membersList.success.filter((member) => member.books.length > 0)
-    }
-
     const overViewData = [
-        {
-            id: 'first-icon',
-            title: 'Members',
-            icon: Icon.People,
-            text: membersList
-        },
-        {
-            id: 'second-icon',
-            title: 'total books',
-            icon: Icon.Book,
-            text: booksList
-        },
-        {
-            id: 'third-icon',
-            title: 'borrowers',
-            icon: Icon.People,
-            text: membersList
-        }
+        { id: 'first-icon', title: 'Members', icon: Icon.People, text: value },
+        { id: 'second-icon', title: 'total books', icon: Icon.Book, text: booksList },
+        { id: 'third-icon', title: 'borrowers', icon: Icon.People, text: borrowers }
     ]
 
     return (

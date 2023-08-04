@@ -7,6 +7,7 @@ import DeleteRequest from '../Modules/DeleteRequest';
 import PopUp from '../Modal/PopUp';
 import { hideAddButton } from "../../Reducers/Book"
 import LoadingFunction from '../Modules/LoadingFunction'
+import ImagePath from '../ImagePath';
 
 
 export const BooksTable = ({ displayAddIcon }) => {
@@ -48,8 +49,9 @@ export const BooksTable = ({ displayAddIcon }) => {
                 hideAddButton(false)
             )
         )
-    }, [value])
 
+        console.log(value)
+    }, [value])
 
 
     return (
@@ -69,7 +71,8 @@ export const BooksTable = ({ displayAddIcon }) => {
                         return (
                             <tr className="text-capitalize" role='button' key={index}>
                                 <td>
-                                    <img src={`/uploads/${book.filename}`} className='me-3' />
+                                    {/* <img src={`/uploads/${book.filename}`} className='me-3' /> */}
+                                    <img src={ImagePath(book.filename)} className='me-3' alt={book.filename} />
                                     {book.title}
                                 </td>
                                 <td className='pt-3'>{book.author}</td>

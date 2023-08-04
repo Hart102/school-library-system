@@ -3,7 +3,7 @@ import * as Icon from 'react-bootstrap-icons'
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { hideAddButton } from "../../Reducers/Book"
-import { deleteMember } from '../../Reducers/membersReducer'
+import { deleteMember, countBorrowers } from '../../Reducers/membersReducer'
 import PopUp from '../Modal/PopUp'
 import DeleteRequest from '../Modules/DeleteRequest'
 import LoadingFunction from '../Modules/LoadingFunction'
@@ -60,6 +60,10 @@ const BorrowersTable = () => {
             const filteredMembers =
                 membersList.success.filter((member) => member.books.length > 0);
             setBorrowers(filteredMembers)
+
+            dispatch(// Dispatch action to get the total number of borrowers in the overview
+                countBorrowers(filteredMembers)
+            )
         }
     }, [membersList])
 

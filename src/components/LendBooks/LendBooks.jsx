@@ -9,8 +9,9 @@ import { PostRequest } from '../Modules/PostRequest'
 import SearchBooks from '../Search/SearchBooks'
 import SearchMembers from '../Search/SearchMembers'
 import Title from '../Title'
-import { getSingleBook } from '../../Reducers/Book'
+import { increaseBorrowedCount, getSingleBook } from '../../Reducers/Book'
 import { getSingleMember } from '../../Reducers/membersReducer'
+import { borrowBooks } from '../../Reducers/membersReducer'
 
 const LendBooks = () => {
     const dispatch = useDispatch();
@@ -24,14 +25,17 @@ const LendBooks = () => {
     const [clearInput, setClearInput] = useState('')
 
     const handleSubmit = () => {
+        const bookId = book.id;
+        const regNo = member.RegNo;
+        const BorrowedBook = value.success.find((book) => book.id == bookId)
 
         if (member && book && bookReturningDate) {
 
             PostRequest( // Borrow books function 
                 "http://localhost:3000/api/lendBooks",
                 {
-                    bookId: book.id,
-                    regNo: member.RegNo,
+                    bookId,
+                    regNo,
                     returningDate: bookReturningDate
                 },
 
@@ -39,6 +43,14 @@ const LendBooks = () => {
                 setIsModelOpen,
                 setClearInput,
                 setMessage,
+
+                dispatch(
+                    borrowBooks({
+                        regNo,
+                        BorrowedBook
+                    })
+                )
+
             )
         }
     }
@@ -52,7 +64,7 @@ const LendBooks = () => {
         if(message.title == "success"){
             dispatch(getSingleBook(''))
             dispatch(getSingleMember(''))
-            setMessage('')
+            dispatch(increaseBorrowedCount(book.id))
         }
     }, [message])
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { updateBook } from "../../Reducers/Book";
+import { useLocation, useNavigate } from "react-router-dom";
+import { addBook, updateBook } from "../../Reducers/Book";
 import { PostRequest } from "../../components/Modules/PostRequest";
 import Button from "../../components/Button/Button";
 import FormInput from "../../components/FormInput";
@@ -14,13 +14,13 @@ const AddBooks = () => {
 
     const dispatch = useDispatch();
     const location = useLocation();
+    const navigation = useNavigate();
     const [bookToUpdate, setBookToUpdate] = useState(location.state);
 
     const [id, setId] = useState('')
     const [file, setFile] = useState('');
     const [ISBN, setIsbn] = useState('');
     const [title, setTitle] = useState('');
-    const [pages, setPages] = useState('');
     const [author, setAuthor] = useState('');
     const [length, setLength] = useState('');
     const [edition, setEdtion] = useState('');
@@ -51,7 +51,6 @@ const AddBooks = () => {
     const clearInputs = () => {
         setIsbn('');
         setFile('');
-        setPages('');
         setTitle('');
         setLength('');
         setAuthor('');
@@ -69,14 +68,29 @@ const AddBooks = () => {
         // Books registration function 
         if (!bookToUpdate) {
             PostRequest(
-                "http://localhost:3000/api/registerBooks", formData,
+                // "http://localhost:3000/api/registerBooks", formData,
+                "http://localhost:3000/api/imageUpload", formData,
 
                 setIsLoading,
                 setIsModalOpen,
                 clearInputs,
                 setMessage,
+
+                dispatch(
+                    addBook({
+                        ISBN,
+                        title,
+                        length,
+                        count: 0,
+                        author,
+                        edition,
+                        subject,
+                        publisher,
+                        totalBooks,
+                        description
+                    })
+                )
             )
-            if (isLoading) location.reload()
 
         } else {
             // Update book function 
@@ -92,7 +106,6 @@ const AddBooks = () => {
                     updateBook({
                         id,
                         ISBN,
-                        pages,
                         title,
                         length,
                         author,
@@ -104,20 +117,22 @@ const AddBooks = () => {
                     })
                 )
             )
+        }
+    }
 
-            // SWitch to register mode 
-            if (message.title == "success") {
-                setBookToUpdate('')
-            }
+    const closeModle = () => {
+        setIsModalOpen(false)
+        if(message.msg == "Update successful"){
+            navigation('/books')
         }
     }
 
     useEffect(() => {
+
         if (bookToUpdate) { // Update book function 
             setId(bookToUpdate.id)
-            setIsbn(bookToUpdate.ISBN)
+            setIsbn(bookToUpdate.isbn)
             setTitle(bookToUpdate.title)
-            setPages(bookToUpdate.pages)
             setLength(bookToUpdate.length)
             setFile(bookToUpdate.filename)
             setAuthor(bookToUpdate.author)
@@ -127,7 +142,9 @@ const AddBooks = () => {
             setTotalBooks(bookToUpdate.totalBooks)
             setDescription(bookToUpdate.description)
         }
-    }, [bookToUpdate])
+       
+
+    }, [bookToUpdate, message])
 
 
     return (
@@ -208,7 +225,7 @@ const AddBooks = () => {
                 action={isModalOpen}
                 message={message.msg}
                 title={message.title}
-                onclick={() => setIsModalOpen(false)}
+                onclick={() => closeModle()}
             />
         </>
     )

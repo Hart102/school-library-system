@@ -56,7 +56,7 @@ const Members = () => {
             )
         )
 
-        
+
     }, [membersList])
 
     return (
@@ -82,7 +82,7 @@ const Members = () => {
                             <td className='pt-3'>{member.Department}</td>
                             <td className='pt-3'>{member.College}</td>
                             <td className='pt-3 d-flex flex-lg-row flex-column'>
-                                <Icon.Person onClick={() => viewProfile(member._id)} />
+                                <Icon.Person onClick={() => viewProfile(member._id && member._id)} />
                                 <Icon.Pencil
                                     role='button'
                                     className='mx-lg-4 my-lg-0 my-3'
@@ -92,7 +92,7 @@ const Members = () => {
                                     <Icon.Trash
                                         role='button'
                                         className=''
-                                        onDoubleClick={() => deleteMembers({ id: member._id })}
+                                        onDoubleClick={() => deleteMembers(member._id && { id: member._id })}
                                     />
                                 }
                             </td>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useLocation, useNavigate } from "react-router-dom"
+import { descreaseBooksCountAction } from "../../Reducers/Book"
+import { returnBookAction } from "../../Reducers/membersReducer"
 import { ImagePreview } from "../Camera/Camera"
 import PopUp from "../Modal/PopUp"
 import { PostRequest } from "../Modules/PostRequest"
@@ -8,17 +10,21 @@ import { BooksContainer, BooksContent } from "./BooksContainer"
 import ProfileContainer from './ProfileContainer'
 import Text from './Text'
 
+
 const Profile = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const [member, setMember] = useState()
   const members = useSelector((state) => state.members.value);
+  const booksList = useSelector((state) => state.books.value);
+  const [borrowedBooks, setborrowedBooks] = useState('')
+
 
   const [message, setMessage] = useState('')
+  const [clearInput, setClearInput] = useState('')
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [clearInput, setClearInput] = useState('')
   const [requestObject, setRequestObject] = useState('')
 
 
@@ -31,44 +37,83 @@ const Profile = () => {
       setIsModalOpen,
       setClearInput,
       setMessage,
-    )
 
-    if (isLoading) location.reload()
+      dispatch( // Dispatch action to return book
+        returnBookAction({
+          regNo: Obj.regNo,
+          bookId: Obj.bookId
+        })
+      )
+    )
   }
 
 
   useEffect(() => {
     if (!location.state) return navigation('/');
 
-    if (members) { // find member to be displayed
-      let result = members.success.find((member) => member._id == location.state)
-      setMember(result)
+    if (members) {
+      /* Find member from redux arrary using the id provided by location */
+      const findMember = members.success.find((member) => member._id == location.state)
+      setMember(findMember)
+
+      /* find borrowed books from redux using 
+      the id provided by the members record and attach a borrowed or returning date to the */
+      if (booksList) {
+
+        const books = [];
+        booksList.success.map((book) => findMember.books.map((article) => {
+          if (book.id == article.id) {
+            book = {
+              ...book,
+              borrowedDate: article.borrowedDate,
+              bookReturningDate: article.bookReturningDate,
+            }
+            books.push(book)
+          }
+          setborrowedBooks(books)
+        }))
+      }
     }
 
-  }, [members])
+    // Dispatch action to reduce the total number of books when a book is return be a member
+    if (message.title == "success") {
+      dispatch(
+        descreaseBooksCountAction(requestObject.bookId)
+      )
+    }
+
+  }, [members, message])
 
 
   return (
     <div className="bg-white p-lg-5 p-3">
       <ImagePreview src={member && member.Profile} />
       <ProfileContainer>
-
-        <Text title={"name"} text={member && member.FullName} />
-        <Text title={"Registration Number"} text={member && member.RegNo} />
-        <Text title={"Department"} text={member && member.Department} />
-        <Text title={"College"} text={member && member.College} />
-        <Text title={"Email"} text={member && member.Email} />
-        <Text title={"Year Of Admission"} text={member && member.YearOfAdmission} />
+        <div className="d-lg-flex justify-content-between">
+          <div>
+            <Text title={"name"} text={member && member.FullName} />
+            <Text title={"Registration Number"} text={member && member.RegNo} />
+            <Text title={"Department"} text={member && member.Department} />
+          </div>
+          <div>
+            <Text title={"College"} text={member && member.College} />
+            <Text title={"Email"} text={member && member.Email} />
+            <Text title={"Year Of Admission"} text={member && member.YearOfAdmission} />
+          </div>
+        </div>
 
         <BooksContainer>
-          {member && member.books.length < 1 ?
-            <p className="text-center">Books will be displayed here once they're add.</p> :
-            member && member.books.map((book, index) => {
-              return (
+          {borrowedBooks && borrowedBooks.length < 1 ?
+            <p className="ms-lg-5 ps-lg-4">Books will be displayed here once they're add.</p> :
+            borrowedBooks && borrowedBooks.map((book, index) => {
+              return(
                 <BooksContent
                   key={index}
-                  BookObject={book}
-                  onclick={() => returnBook({ _id: member._id, bookId: book.id })}
+                  title={book.title}
+                  filename={book.filename}
+                  borrowerdDate={book.borrowedDate}
+                  returningDate={book.bookReturningDate}
+                  onclick={() => returnBook({ _id: member._id, regNo: member.RegNo, bookId: book.id })}
                 />
               )
             })
@@ -90,47 +135,8 @@ const Profile = () => {
 export default Profile
 
 
-
-
-
-
-
-{/* <>
-  <section className="bg-white d-flex flex-column align-items-center p-5 text-uppercase">
-    <div className="text-center">
-      <strong>{member && member.RegNo}</strong>
-      <div className="my-3"><ImagePreview src={member && member.Profile} /></div>
-      <strong>{member && member.FullName}</strong>
-      <p>{member && member.Department}</p>
-    </div>
-
-    <div className="row g-4 w-100 py-4">
-      <Card title={'College'} text={member && member.College} />
-      <Card title={'Email'} text={member && member.Email} />
-      <Card title={'Year Of Admission'} text={member && member.YearOfAdmission} />
-    </div>
-
-    <div
-      className="row gap-5 justify-content-center profile-book-display py- w-100">
-      <b className="text-center">Books</b>
-      {member && member.books.length < 1 ? <p>Books will be displayed here once they're add.</p> :
-        member && member.books.map((book, index) => {
-          return (
-            <BooksContent
-              key={index}
-              BookObject={book}
-              onclick={() => returnBook({ regNo: member.RegNo, bookId: book.id })}
-            />
-          )
-        })
-      }
-    </div>
-  </section>
-
-  <PopUp
-    action={isModalOpen}
-    message={message.msg}
-    title={message.title}
-    onclick={() => setIsModalOpen(false)}
-  />
-</> */}
+//   < BooksContent
+// // key={index}
+// BookObject = { member }
+// onclick = {() => returnBook({ _id: member._id, regNo: member.RegNo, bookId: book.id })}
+// />

@@ -30,27 +30,18 @@ export const PostRequest = async (
         dispatchAction
         setIsLoading(false)
         isModalOpen(true)
-        setMessage({
-            title: "success",
-            msg: response.success
-        })
+        setMessage({ title: "success", msg: response.success })
 
         // If warning 
     } else if (response.warning) {
         isModalOpen(true)
         setIsLoading(false)
-        setMessage({
-            title: "Warning",
-            msg: response.warning
-        })
+        setMessage({ title: "Warning", msg: response.warning })
 
     } else { // If not successfule
 
         isModalOpen(true)
         setIsLoading(false)
-        setMessage({
-            title: "Error",
-            msg: response.error
-        })
+        setMessage({ title: "Error", msg: response.error })
     }
 }
