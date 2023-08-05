@@ -10,7 +10,7 @@ import LoadingFunction from '../Modules/LoadingFunction'
 import ImagePath from '../ImagePath';
 
 
-export const BooksTable = ({ displayAddIcon }) => {
+export const BooksTable = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -71,7 +71,6 @@ export const BooksTable = ({ displayAddIcon }) => {
                         return (
                             <tr className="text-capitalize" role='button' key={index}>
                                 <td>
-                                    {/* <img src={`/uploads/${book.filename}`} className='me-3' /> */}
                                     <img src={ImagePath(book.filename)} className='me-3' alt={book.filename} />
                                     {book.title}
                                 </td>
@@ -83,10 +82,11 @@ export const BooksTable = ({ displayAddIcon }) => {
                                         className='mx-lg-4 my-lg-0 my-3'
                                         onClick={() => updateBook(book)}
                                     />
-                                    {
-                                        isLoading ? <p>Deleting...</p> :
-                                            <Icon.Trash onDoubleClick={() => deleteBooks({ id: book.id, filename: book.filename })} />
-                                    }
+
+                                    <Icon.Trash
+                                        title='Doublick to delete'
+                                        onDoubleClick={() => deleteBooks({ id: book.id, filename: book.filename })}
+                                    />
                                 </td>
                             </tr>
                         )

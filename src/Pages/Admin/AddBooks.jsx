@@ -46,7 +46,7 @@ const AddBooks = () => {
     formData.append('totalBooks', totalBooks);
     formData.append('description', description);
     // Capture the name of the old image to replaced if the user provides a new image
-    formData.append('oldFileName', bookToUpdate && bookToUpdate.filename)
+    formData.append('oldFileName', bookToUpdate ? bookToUpdate.filename : bookToUpdate.filename)
 
     const clearInputs = () => {
         setIsbn('');
@@ -68,8 +68,8 @@ const AddBooks = () => {
         // Books registration function 
         if (!bookToUpdate) {
             PostRequest(
-                // "http://localhost:3000/api/registerBooks", formData,
-                "http://localhost:3000/api/imageUpload", formData,
+                "http://localhost:3000/api/registerBooks", formData,
+                // "http://localhost:3000/api/imageUpload", formData,
 
                 setIsLoading,
                 setIsModalOpen,
@@ -122,7 +122,7 @@ const AddBooks = () => {
 
     const closeModle = () => {
         setIsModalOpen(false)
-        if(message.msg == "Update successful"){
+        if (message.msg == "Update successful") {
             navigation('/books')
         }
     }
@@ -141,8 +141,10 @@ const AddBooks = () => {
             setPublisher(bookToUpdate.publisher)
             setTotalBooks(bookToUpdate.totalBooks)
             setDescription(bookToUpdate.description)
+
+            // console.log(bookToUpdate.)
         }
-       
+
 
     }, [bookToUpdate, message])
 
