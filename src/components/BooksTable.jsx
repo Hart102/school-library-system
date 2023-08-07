@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import * as Icon from 'react-bootstrap-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { deleteBook } from '../../Reducers/Book';
-import DeleteRequest from '../Modules/DeleteRequest';
-import PopUp from '../Modal/PopUp';
-import { hideAddButton } from "../../Reducers/Book"
-import LoadingFunction from '../Modules/LoadingFunction'
-import ImagePath from '../ImagePath';
+import { deleteBook } from '../Reducers/Book';
+import DeleteRequest from './Modules/DeleteRequest';
+import { hideAddButton } from "../Reducers/Book"
+import LoadingFunction from './Modules/LoadingFunction'
+import ImagePath from './ImagePath';
+import { modalAction, setMessageAction } from '../Reducers/ModalAction';
+
 
 
 export const BooksTable = () => {
@@ -38,6 +39,16 @@ export const BooksTable = () => {
         )
     }
 
+    if (message) {
+        dispatch(
+            setMessageAction({
+                title: message.title,
+                msg: message.msg
+            })
+        )
+        dispatch(modalAction(true))
+    }
+
     // Load Data
     useEffect(() => {
         LoadingFunction(
@@ -50,7 +61,7 @@ export const BooksTable = () => {
             )
         )
 
-        console.log(value)
+
     }, [value])
 
 
@@ -93,12 +104,6 @@ export const BooksTable = () => {
                     })
                 }
             </tbody>
-            <PopUp
-                message={message.msg}
-                title={message.title}
-                action={isOpen}
-                onclick={() => setIsOpen(false)}
-            />
         </>
     )
 }

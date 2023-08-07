@@ -4,12 +4,12 @@ import { useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
 import { addMembers, upDateMember } from "../../Reducers/membersReducer"
 import { PostRequest } from "../../components/Modules/PostRequest"
-import Button from "../../components/Button/Button"
+import Button from "../../components/Button"
 import { Camera, ImagePreview } from "../../components/Camera/Camera"
 import FormInput from "../../components/FormInput"
-import PopUp from "../../components/Modal/PopUp"
 import Title from "../../components/Title"
 import FormLayout from "../../layout/FormLayout"
+import { modalAction, setMessageAction} from "../../Reducers/ModalAction"
 
 const AddMember = () => {
 
@@ -124,6 +124,16 @@ const AddMember = () => {
         }
     }
 
+    if (message) {
+        dispatch(
+            setMessageAction({
+                title: message.title,
+                msg: message.msg
+            })
+        )
+        dispatch(modalAction(true))
+    }
+
     useEffect(() => {
         // Update member function 
         if (memberToBeUpdated) {
@@ -206,13 +216,6 @@ const AddMember = () => {
                     style={'col-md-5 self-align-right py-2 my-4'}
                 />
             </FormLayout>
-
-            <PopUp
-                action={isModalOpen}
-                message={message.msg}
-                title={message.title}
-                onclick={() => setIsModalOpen(false)}
-            />
         </>
     )
 }

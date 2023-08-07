@@ -1,7 +1,8 @@
 import * as Icon from 'react-bootstrap-icons';
-import { Link } from 'react-router-dom';
-import Title from '../Title';
-import Button from '../Button/Button'
+import { Link, useNavigate } from 'react-router-dom';
+import Title from './Title';
+import Button from './Button'
+import axios from 'axios';
 
 
 const LinkObect = [
@@ -13,9 +14,16 @@ const LinkObect = [
     { location: '/lendBooks', text: 'lend books', icon: Icon.DatabaseFillAdd },
 ]
 
+
 const Sidebar = ({ refName }) => {
+    const navigation = useNavigate()
     const closeSideBar = (sidebar) => {
         sidebar.classList.remove('openSideBar');
+    }
+
+    const handleLogout = async () => {
+        const request = await axios.get("http://localhost:3000/api/admin/destroySession")
+        if(request.data.success) return navigation("/")
     }
 
     return (
@@ -43,7 +51,11 @@ const Sidebar = ({ refName }) => {
                 </ul>
                 <div className='d-flex flex-column justify-content-center h-50'>
                     <div className='px-4'>
-                        <Button className='btn bg-white shadow-sm border rounded-pill px-4 py-2' btnText='LOG OUT' />
+                        <Button
+                            btnText='LOG OUT'
+                            onclick={() => handleLogout()}
+                            className='btn bg-white shadow-sm border rounded-pill px-4 py-2'
+                        />
                     </div>
                 </div>
             </div>

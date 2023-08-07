@@ -5,6 +5,8 @@ import { deleteBook, getSingleBook } from '../../Reducers/Book';
 import { SearchFunction } from './SearchFunction';
 import { SearchInput } from './SearchInput';
 import { SearchResult, SearchResultContainer } from './SearchResult';
+import ImagePath from '../ImagePath';
+
 
 const SearchBooks = () => {
 
@@ -58,7 +60,7 @@ const SearchBooks = () => {
                         <SearchResult
                             name={book.title}
                             option={book.edition}
-                            image={`/uploads/${book.filename}`}
+                            image={ImagePath(book.filename)}
                             onclick={() => updateBook(book)}
                             getIdFunction={() => selectBook({title: book.title, id: book.id})}
                             ondoubleclick={() => removeBook(book.id)}

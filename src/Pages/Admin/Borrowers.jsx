@@ -1,15 +1,14 @@
-import BorrowersTable from "../../components/BorrowersTable/BorrowersTable"
+import BorrowersTable from "../../components/BorrowersTable"
 import Overview from "../../components/Overview/Overview"
 import SearchMembers from "../../components/Search/SearchMembers"
-import { ResponsiveTable, Table, TableLayout } from "../../components/Table/Table"
-import Title from "../../components/Title"
+import { ResponsiveTable, Table, TableLayout } from "../../components/Table"
 
 const Borrowers = () => {
   return (
     <>
-      <Title text={"Borrowers"} />
       <Overview />
       <TableLayout >
+       <b>Borrowers</b>
         <SearchMembers />
         <ResponsiveTable>
           <Table>

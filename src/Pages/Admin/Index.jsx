@@ -1,15 +1,14 @@
-import Members from '../../components/Members/Members'
+import Members from '../../components/MembersTable'
 import Overview from "../../components/Overview/Overview"
 import SearchMembers from "../../components/Search/SearchMembers"
-import { TableLayout, ResponsiveTable, Table } from "../../components/Table/Table"
-import Title from '../../components/Title'
+import { TableLayout, ResponsiveTable, Table } from "../../components/Table"
 
 const Index = () => {
   return (
     <>
-      <Title text={"Members"} />
       <Overview />
       <TableLayout >
+        <b>Members</b>
         <SearchMembers />
         <ResponsiveTable>
           <Table>

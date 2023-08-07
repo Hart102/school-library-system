@@ -4,11 +4,14 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { descreaseBooksCountAction } from "../../Reducers/Book"
 import { returnBookAction } from "../../Reducers/membersReducer"
 import { ImagePreview } from "../Camera/Camera"
-import PopUp from "../Modal/PopUp"
 import { PostRequest } from "../Modules/PostRequest"
 import { BooksContainer, BooksContent } from "./BooksContainer"
 import ProfileContainer from './ProfileContainer'
 import Text from './Text'
+import ImagePath from "../ImagePath"
+import { modalAction, setMessageAction } from "../../Reducers/ModalAction"
+
+
 
 
 const Profile = () => {
@@ -47,6 +50,15 @@ const Profile = () => {
     )
   }
 
+  if (message) {
+    dispatch(
+        setMessageAction({
+            title: message.title,
+            msg: message.msg
+        })
+    )
+    dispatch(modalAction(true))
+}
 
   useEffect(() => {
     if (!location.state) return navigation('/');
@@ -110,7 +122,7 @@ const Profile = () => {
                 <BooksContent
                   key={index}
                   title={book.title}
-                  filename={book.filename}
+                  filename={ImagePath(book.filename)}
                   borrowerdDate={book.borrowedDate}
                   returningDate={book.bookReturningDate}
                   onclick={() => returnBook({ _id: member._id, regNo: member.RegNo, bookId: book.id })}
@@ -120,23 +132,9 @@ const Profile = () => {
           }
         </BooksContainer>
       </ProfileContainer>
-
-      <PopUp
-        action={isModalOpen}
-        message={message.msg}
-        title={message.title}
-        onclick={() => setIsModalOpen(false)}
-      />
     </div>
   )
 
 }
 
 export default Profile
-
-
-//   < BooksContent
-// // key={index}
-// BookObject = { member }
-// onclick = {() => returnBook({ _id: member._id, regNo: member.RegNo, bookId: book.id })}
-// />

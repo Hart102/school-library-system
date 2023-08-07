@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { addBook, updateBook } from "../../Reducers/Book";
-import { PostRequest } from "../../components/Modules/PostRequest";
-import Button from "../../components/Button/Button";
+import { modalAction, setMessageAction } from "../../Reducers/ModalAction";
+import Button from "../../components/Button";
 import FormInput from "../../components/FormInput";
-import PopUp from "../../components/Modal/PopUp";
+import { PostRequest } from "../../components/Modules/PostRequest";
 import Title from "../../components/Title";
 import FormLayout from "../../layout/FormLayout";
+
 
 
 const AddBooks = () => {
@@ -46,7 +47,7 @@ const AddBooks = () => {
     formData.append('totalBooks', totalBooks);
     formData.append('description', description);
     // Capture the name of the old image to replaced if the user provides a new image
-    formData.append('oldFileName', bookToUpdate ? bookToUpdate.filename : bookToUpdate.filename)
+    formData.append('oldFileName', bookToUpdate ? bookToUpdate.filename : "")
 
     const clearInputs = () => {
         setIsbn('');
@@ -120,11 +121,14 @@ const AddBooks = () => {
         }
     }
 
-    const closeModle = () => {
-        setIsModalOpen(false)
-        if (message.msg == "Update successful") {
-            navigation('/books')
-        }
+    if (message) {
+        dispatch(
+            setMessageAction({
+                title: message.title,
+                msg: message.msg
+            })
+        )
+        dispatch(modalAction(true))
     }
 
     useEffect(() => {
@@ -141,10 +145,14 @@ const AddBooks = () => {
             setPublisher(bookToUpdate.publisher)
             setTotalBooks(bookToUpdate.totalBooks)
             setDescription(bookToUpdate.description)
-
-            // console.log(bookToUpdate.)
         }
 
+        if (message) {
+            dispatch(
+                modalAction(true),
+                setMessageAction(message)
+            )
+        }
 
     }, [bookToUpdate, message])
 
@@ -223,12 +231,6 @@ const AddBooks = () => {
                     />
                 </div>
             </FormLayout>
-            <PopUp
-                action={isModalOpen}
-                message={message.msg}
-                title={message.title}
-                onclick={() => closeModle()}
-            />
         </>
     )
 }

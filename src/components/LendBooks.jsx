@@ -1,28 +1,28 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { hideAddButton } from '../../Reducers/Book'
-import Button from '../Button/Button'
-import FormInput from '../FormInput'
-import PopUp from '../Modal/PopUp'
-import { PostRequest } from '../Modules/PostRequest'
-import SearchBooks from '../Search/SearchBooks'
-import SearchMembers from '../Search/SearchMembers'
-import Title from '../Title'
-import { increaseBorrowedCount, getSingleBook } from '../../Reducers/Book'
-import { getSingleMember } from '../../Reducers/membersReducer'
-import { borrowBooks } from '../../Reducers/membersReducer'
+import { hideAddButton } from '../Reducers/Book'
+import Button from './Button'
+import FormInput from './FormInput'
+import { PostRequest } from './Modules/PostRequest'
+import SearchBooks from './Search/SearchBooks'
+import SearchMembers from './Search/SearchMembers'
+import Title from './Title'
+import { increaseBorrowedCount, getSingleBook } from '../Reducers/Book'
+import { getSingleMember } from '../Reducers/membersReducer'
+import { borrowBooks } from '../Reducers/membersReducer'
+import { modalAction, setMessageAction } from '../Reducers/ModalAction'
+
 
 const LendBooks = () => {
     const dispatch = useDispatch();
     const { member } = useSelector((state) => state.members);
     const { value, book } = useSelector((state) => state.books);
 
-    const [bookReturningDate, setBookReturningDate] = useState('')
     const [message, setMessage] = useState('');
+    const [clearInput, setClearInput] = useState('')
     const [isLoading, setIsLoading] = useState(true);
     const [isModelOpen, setIsModelOpen] = useState(false);
-    const [clearInput, setClearInput] = useState('')
+    const [bookReturningDate, setBookReturningDate] = useState('')
 
     const handleSubmit = () => {
         const bookId = book.id;
@@ -53,6 +53,16 @@ const LendBooks = () => {
 
             )
         }
+    }
+
+    if (message) {
+        dispatch(
+            setMessageAction({
+                title: message.title,
+                msg: message.msg
+            })
+        )
+        dispatch(modalAction(true))
     }
 
     useEffect(() => {
@@ -96,12 +106,6 @@ const LendBooks = () => {
                     </div>
                 </div>
             </section>
-            <PopUp
-                message={message.msg}
-                title={message.title}
-                action={isModelOpen}
-                onclick={() => setIsModelOpen(false)}
-            />
         </>
 
     )
