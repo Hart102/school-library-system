@@ -124,15 +124,15 @@ const AddMember = () => {
         }
     }
 
-    if (message) {
-        dispatch(
-            setMessageAction({
-                title: message.title,
-                msg: message.msg
-            })
-        )
-        dispatch(modalAction(true))
-    }
+    // if (message) {
+    //     dispatch(
+    //         setMessageAction({
+    //             title: message.title,
+    //             msg: message.msg
+    //         })
+    //     )
+    //     dispatch(modalAction(true))
+    // }
 
     useEffect(() => {
         // Update member function 
@@ -221,3 +221,4 @@ const AddMember = () => {
 }
 
 export default AddMember
+
