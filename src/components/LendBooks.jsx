@@ -19,7 +19,7 @@ const LendBooks = () => {
     const { value, book } = useSelector((state) => state.books);
 
     const [message, setMessage] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [isModelOpen, setIsModelOpen] = useState(false);
     const [bookReturningDate, setBookReturningDate] = useState('')
 
@@ -60,7 +60,7 @@ const LendBooks = () => {
         )
 
         // If request is successful, then clear object used in making request
-        if(message.title == "success"){
+        if (message.title == "success") {
             dispatch(getSingleBook(''))
             dispatch(getSingleMember(''))
             dispatch(increaseBorrowedCount(book.id))
@@ -72,15 +72,13 @@ const LendBooks = () => {
             <section className="col-md-10 mx-auto p-lg-5 h-100">
                 <div className='shadow-sm bg-white rounded d-flex flex-column p-lg-5 p-5 mx-auto'>
                     <div className="text-center">
-                        <Title text="lend book"/>
+                        <Title text="lend book" />
                         <p className='mb-3 fw-light'>Member can only borrow four books at a time</p>
                     </div>
                     <SearchMembers />
                     <input type={"text"} value={member && member.RegNo} disabled />
-
                     <br /><SearchBooks />
                     <input type={"text"} value={book && book.title} disabled />
-
                     <br />
                     <div className="d-flex justify-content-between align-items-center">
                         <FormInput
@@ -90,7 +88,11 @@ const LendBooks = () => {
                             onchange={(e) => setBookReturningDate(e.target.value)}
                         />
                         <span>
-                            <Button btnText={!isLoading ? "Loading..." : "Add"} onclick={handleSubmit} />
+                            <Button
+                                disabled={isLoading}
+                                onclick={handleSubmit}
+                                btnText={isLoading ? "Loading..." : "Add"}
+                            />
                         </span>
                     </div>
                 </div>
@@ -99,8 +101,8 @@ const LendBooks = () => {
             <PopUp
                 title={message.title}
                 msg={message.msg}
-                isModalOpen={isOpen}
-                onclick={() => setIsOpen(false)}
+                isModalOpen={isModelOpen}
+                onclick={() => setIsModelOpen(false)}
             />
         </>
     )

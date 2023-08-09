@@ -156,45 +156,42 @@ const AddMember = () => {
                     />
                 </div>
 
-                <div>
-                    <FormInput
-                        label='FullName'
-                        type='text' value={FullName}
-                        onchange={(e) => setFullName(e.target.value.toLowerCase())}
-                    />
 
-                    <FormInput
-                        label='registration Number'
-                        type='text' value={RegNo}
-                        onchange={(e) => setRegNo(e.target.value.toLowerCase())}
-                    />
+                <FormInput
+                    label='FullName'
+                    type='text' value={FullName}
+                    onchange={(e) => setFullName(e.target.value.toLowerCase())}
+                />
 
-                    <FormInput
-                        label='Departmant'
-                        type='text' value={Department}
-                        onchange={(e) => setDepartment(e.target.value.toLowerCase())}
-                    />
-                </div>
+                <FormInput
+                    label='registration Number'
+                    type='text' value={RegNo}
+                    onchange={(e) => setRegNo(e.target.value.toLowerCase())}
+                />
 
-                <div>
-                    <FormInput
-                        label='College'
-                        type='text' value={College}
-                        onchange={(e) => setCollege(e.target.value.toLowerCase())}
-                    />
+                <FormInput
+                    label='Departmant'
+                    type='text' value={Department}
+                    onchange={(e) => setDepartment(e.target.value.toLowerCase())}
+                />
 
-                    <FormInput
-                        label='Year of admission'
-                        type='text' value={YearOfAdmission}
-                        onchange={(e) => setYearOfAdmission(e.target.value.toLowerCase())}
-                    />
+                <FormInput
+                    label='College'
+                    type='text' value={College}
+                    onchange={(e) => setCollege(e.target.value.toLowerCase())}
+                />
 
-                    <FormInput
-                        label='Email Address'
-                        type='text' value={Email}
-                        onchange={(e) => setEmail(e.target.value.toLowerCase())}
-                    />
-                </div>
+                <FormInput
+                    label='Year of admission'
+                    type='text' value={YearOfAdmission}
+                    onchange={(e) => setYearOfAdmission(e.target.value.toLowerCase())}
+                />
+
+                <FormInput
+                    label='Email Address'
+                    type='text' value={Email}
+                    onchange={(e) => setEmail(e.target.value.toLowerCase())}
+                />
 
                 <Button
                     type='button'
