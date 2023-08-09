@@ -15,6 +15,7 @@ import MainLayout from './layout/MainLayout';
 import Borrowers from './Pages/Admin/Borrowers';
 import Login from './Pages/Login/Login';
 import { getAllBooks, getAllMembers } from "./components/Modules/Api"
+import ViewBook from './Pages/Admin/ViewBook/ViewBook';
 
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
           <Route element={<ContentLayOut />}>
             <Route index path='/dashboard' element={<Index />} />
             <Route path='/books' element={<Books />} />
+            <Route path='/view/book/:id' element={<ViewBook />} />
             <Route path='/add/books' element={<AddBooks />} />
             <Route path='/add/member' element={<AddMember />} />
             <Route path='/member/profile' element={<Profile />} />
@@ -41,10 +43,3 @@ const App = () => {
 }
 
 export default App
-
-
-  // < Route path = '/dashboard/books' element = {< Books />} />
-  //   < Route path = '/dashboard/add/books' element = {< AddBooks />} />
-  //     < Route path = '/dashboard/add/member' element = {< AddMember />} />
-  //       < Route path = '/dashboard/member/profile' element = {< Profile />} />
-  //         < Route path = '/dashboard/lendBooks' element = {< LendBooks />} />

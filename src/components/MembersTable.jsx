@@ -6,8 +6,7 @@ import { hideAddButton } from "../Reducers/Book"
 import { deleteMember } from '../Reducers/membersReducer'
 import DeleteRequest from './Modules/DeleteRequest'
 import LoadingFunction from './Modules/LoadingFunction'
-import { modalAction, setMessageAction } from '../Reducers/ModalAction'
-
+import PopUp from './Modal/PopUp'
 
 const Members = () => {
 
@@ -44,15 +43,6 @@ const Members = () => {
         )
     }
 
-    if (message) {
-        dispatch(
-            setMessageAction({
-                title: message.title,
-                msg: message.msg
-            })
-        )
-        dispatch(modalAction(true))
-    }
 
     // Load members when the page refresh
     useEffect(() => {
@@ -110,12 +100,12 @@ const Members = () => {
                     ))
                 }
             </tbody>
-            {/* <PopUp
-                message={message.msg}
+            <PopUp
                 title={message.title}
-                action={isModelOpen}
+                msg={message.msg}
+                isModalOpen={isModelOpen}
                 onclick={() => setIsModelOpen(false)}
-            /> */}
+            />
         </>
     )
 }

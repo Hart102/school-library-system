@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { addBook, updateBook } from "../../Reducers/Book";
-import { modalAction, setMessageAction } from "../../Reducers/ModalAction";
 import Button from "../../components/Button";
 import FormInput from "../../components/FormInput";
 import { PostRequest } from "../../components/Modules/PostRequest";
 import Title from "../../components/Title";
 import FormLayout from "../../layout/FormLayout";
+import PopUp from "../../components/Modal/PopUp";
 
 
 
@@ -121,16 +121,6 @@ const AddBooks = () => {
         }
     }
 
-    if (message) {
-        dispatch(
-            setMessageAction({
-                title: message.title,
-                msg: message.msg
-            })
-        )
-        dispatch(modalAction(true))
-    }
-
     useEffect(() => {
 
         if (bookToUpdate) { // Update book function 
@@ -147,14 +137,8 @@ const AddBooks = () => {
             setDescription(bookToUpdate.description)
         }
 
-        if (message) {
-            dispatch(
-                modalAction(true),
-                setMessageAction(message)
-            )
-        }
 
-    }, [bookToUpdate, message])
+    }, [bookToUpdate])
 
 
     return (
@@ -231,6 +215,13 @@ const AddBooks = () => {
                     />
                 </div>
             </FormLayout>
+
+            <PopUp
+                title={message.title}
+                msg={message.msg}
+                isModalOpen={isModalOpen}
+                onclick={() => setIsModalOpen(false)}
+            />
         </>
     )
 }

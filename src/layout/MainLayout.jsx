@@ -1,7 +1,6 @@
 import axios from "axios"
 import { useEffect, useRef } from "react"
 import { Outlet, useNavigate } from "react-router-dom"
-import PopUp from "../components/Modal/PopUp"
 import Navbar from "../components/Navbar"
 import Sidebar from "../components/Sidebar"
 
@@ -22,7 +21,6 @@ const MainLayout = () => {
   
   return (
     <>
-      <PopUp />
       <div className="mainLayout">
         <Sidebar refName={sideBarRef} />
         <Navbar

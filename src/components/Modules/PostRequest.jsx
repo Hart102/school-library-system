@@ -12,14 +12,14 @@ export const PostRequest = async (
     setMessage,
     dispatchAction,
 ) => {
+    // set isLoading to true while the api call is still not resolved
+    setIsLoading(true);
 
     // Make a post request using the provided api and data
     let request, response;
     request = await axios.post(url, info);
     response = request.data;
 
-    // set isLoading to true while the api call is still not resolved
-    setIsLoading(true);
 
     /*if Successful, clear InputBoxes, dispatch actions in redux, 
     set isloading to false, display a model box for successful Message 

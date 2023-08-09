@@ -6,15 +6,16 @@ import { hideAddButton } from "../Reducers/Book"
 import { deleteMember, countBorrowers } from '../Reducers/membersReducer'
 import DeleteRequest from './Modules/DeleteRequest'
 import LoadingFunction from './Modules/LoadingFunction'
-import { modalAction, setMessageAction } from '../Reducers/ModalAction'
-
+import PopUp from './Modal/PopUp'
 
 const BorrowersTable = () => {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [message, setMessage] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [isModelOpen, setIsModelOpen] = useState(false);
+
     const membersList = useSelector((state) => state.members.value);
     const [borrowers, setBorrowers] = useState(membersList ? membersList.success : '')
 
@@ -43,17 +44,6 @@ const BorrowersTable = () => {
             dispatch(deleteMember(Obj.id))
         )
     }
-
-    if (message) {
-        dispatch(
-            setMessageAction({
-                title: message.title,
-                msg: message.msg
-            })
-        )
-        dispatch(modalAction(true))
-    }
-
 
     // Load members when the page refresh
     useEffect(() => {
@@ -92,7 +82,7 @@ const BorrowersTable = () => {
             </thead>
             <tbody>
                 {isLoading ? <tr><td>Loading...</td></tr> :
-                   borrowers &&borrowers.map((member, index) => (
+                    borrowers && borrowers.map((member, index) => (
                         <tr className="text-capitalize" role='button' key={index} >
                             <td className='pe-5'>
                                 <img src={member.Profile} className='me-3' />
@@ -120,6 +110,12 @@ const BorrowersTable = () => {
                     ))
                 }
             </tbody>
+            <PopUp
+                title={message.title}
+                msg={message.msg}
+                isModalOpen={isModelOpen}
+                onclick={() => setIsModelOpen(false)}
+            />
         </>
     )
 }

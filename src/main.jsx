@@ -14,7 +14,6 @@ import membersReducer from './Reducers/membersReducer'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'popper.js'
 import 'bootstrap/dist/js/bootstrap.js'
-import ModalSlice from './Reducers/ModalAction'
 
 
 
@@ -22,7 +21,6 @@ const store = configureStore({
   reducer: {
     books: bookReducers,
     members: membersReducer,
-    modal: ModalSlice
   },
   middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware({

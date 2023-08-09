@@ -10,7 +10,7 @@ import Title from './Title'
 import { increaseBorrowedCount, getSingleBook } from '../Reducers/Book'
 import { getSingleMember } from '../Reducers/membersReducer'
 import { borrowBooks } from '../Reducers/membersReducer'
-import { modalAction, setMessageAction } from '../Reducers/ModalAction'
+import PopUp from './Modal/PopUp'
 
 
 const LendBooks = () => {
@@ -19,7 +19,6 @@ const LendBooks = () => {
     const { value, book } = useSelector((state) => state.books);
 
     const [message, setMessage] = useState('');
-    const [clearInput, setClearInput] = useState('')
     const [isLoading, setIsLoading] = useState(true);
     const [isModelOpen, setIsModelOpen] = useState(false);
     const [bookReturningDate, setBookReturningDate] = useState('')
@@ -41,7 +40,7 @@ const LendBooks = () => {
 
                 setIsLoading,
                 setIsModelOpen,
-                setClearInput,
+                setIsModelOpen,
                 setMessage,
 
                 dispatch(
@@ -53,16 +52,6 @@ const LendBooks = () => {
 
             )
         }
-    }
-
-    if (message) {
-        dispatch(
-            setMessageAction({
-                title: message.title,
-                msg: message.msg
-            })
-        )
-        dispatch(modalAction(true))
     }
 
     useEffect(() => {
@@ -106,8 +95,14 @@ const LendBooks = () => {
                     </div>
                 </div>
             </section>
-        </>
 
+            <PopUp
+                title={message.title}
+                msg={message.msg}
+                isModalOpen={isOpen}
+                onclick={() => setIsOpen(false)}
+            />
+        </>
     )
 }
 

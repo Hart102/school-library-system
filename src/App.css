@@ -148,6 +148,12 @@ nav {
   position: absolute;
 }
 
+.admin-form  .form-control, textarea{
+  border: 0 !important;
+  background: var(--Ash) !important;
+  padding: 1em;
+}
+
 
 /* --------------------------- */
 /* OVERVIEW STYLING  */

@@ -9,7 +9,8 @@ import { BooksContainer, BooksContent } from "./BooksContainer"
 import ProfileContainer from './ProfileContainer'
 import Text from './Text'
 import ImagePath from "../ImagePath"
-import { modalAction, setMessageAction } from "../../Reducers/ModalAction"
+import PopUp from "../Modal/PopUp"
+
 
 
 
@@ -25,8 +26,7 @@ const Profile = () => {
 
 
   const [message, setMessage] = useState('')
-  const [clearInput, setClearInput] = useState('')
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [requestObject, setRequestObject] = useState('')
 
@@ -38,7 +38,7 @@ const Profile = () => {
 
       setIsLoading,
       setIsModalOpen,
-      setClearInput,
+      setIsLoading,
       setMessage,
 
       dispatch( // Dispatch action to return book
@@ -50,15 +50,6 @@ const Profile = () => {
     )
   }
 
-  if (message) {
-    dispatch(
-        setMessageAction({
-            title: message.title,
-            msg: message.msg
-        })
-    )
-    dispatch(modalAction(true))
-}
 
   useEffect(() => {
     if (!location.state) return navigation('/');
@@ -118,7 +109,7 @@ const Profile = () => {
           {borrowedBooks && borrowedBooks.length < 1 ?
             <p className="ms-lg-5 ps-lg-4">Books will be displayed here once they're add.</p> :
             borrowedBooks && borrowedBooks.map((book, index) => {
-              return(
+              return (
                 <BooksContent
                   key={index}
                   title={book.title}
@@ -132,6 +123,13 @@ const Profile = () => {
           }
         </BooksContainer>
       </ProfileContainer>
+
+      <PopUp
+        title={message.title}
+        msg={message.msg}
+        isModalOpen={isModalOpen}
+        onclick={() => setIsModalOpen(false)}
+      />
     </div>
   )
 

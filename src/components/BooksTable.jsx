@@ -7,7 +7,7 @@ import DeleteRequest from './Modules/DeleteRequest';
 import { hideAddButton } from "../Reducers/Book"
 import LoadingFunction from './Modules/LoadingFunction'
 import ImagePath from './ImagePath';
-import { modalAction, setMessageAction } from '../Reducers/ModalAction';
+import PopUp from  '../components/Modal/PopUp'
 
 
 
@@ -37,16 +37,6 @@ export const BooksTable = () => {
                 deleteBook(Obj.id)
             )
         )
-    }
-
-    if (message) {
-        dispatch(
-            setMessageAction({
-                title: message.title,
-                msg: message.msg
-            })
-        )
-        dispatch(modalAction(true))
     }
 
     // Load Data
@@ -104,6 +94,12 @@ export const BooksTable = () => {
                     })
                 }
             </tbody>
+            <PopUp
+                title={message.title}
+                msg={message.msg}
+                isModalOpen={isOpen}
+                onclick={() => setIsOpen(false)}
+            />
         </>
     )
 }
