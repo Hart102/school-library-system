@@ -55,7 +55,7 @@ const Login = () => {
         <p className='text-danger text-center'>{message}</p>
       </div>
       <button
-        type="submit"
+        type="submit" disabled={isLoading}
         className='btn btn-success py-2 px-5 text-white mx-auto my-3' onClick={handleSubmit}>
         {isLoading ? "LOADING..." : "LOGIN"}
       </button>

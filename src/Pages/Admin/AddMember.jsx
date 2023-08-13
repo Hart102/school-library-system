@@ -32,7 +32,7 @@ const AddMember = () => {
     const [YearOfAdmission, setYearOfAdmission] = useState('');
 
     const [message, setMessage] = useState('')
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false)
 
 
@@ -194,12 +194,16 @@ const AddMember = () => {
                 />
 
                 <Button
-                    type='button'
+                    type='button' disabled={isLoading}
                     onclick={() => submitForm()}
                     btnText={
-                        !isLoading ? 'Loading...' : memberToBeUpdated ? 'Update Profile' : 'Register member'
+                        isLoading ?
+                            'Loading...' :
+                            memberToBeUpdated ?
+                                'Update Profile' :
+                                'Register member'
                     }
-                    style={'col-md-5 self-align-right py-2 my-4'}
+                    style={'col-md-4 py-2 my-4'}
                 />
             </FormLayout>
 

@@ -13,7 +13,7 @@ export const BooksContainer = ({ children }) => {
 }
 
 // Book display component styling
-export const BooksContent = ({ filename, title, borrowerdDate, returningDate, onclick }) => {
+export const BooksContent = ({ filename, title, borrowerdDate, returningDate, onclick, disabled }) => {
     return (
         <div className="books-container col-md-11 d-lg-flex shadow-sm p-3 rounded">
             <div className="book-image-preview">
@@ -25,8 +25,8 @@ export const BooksContent = ({ filename, title, borrowerdDate, returningDate, on
                     <p className="my-0">Date Borrorwed: {borrowerdDate}</p>
                     <p className="my-0">Returning Date: {returningDate}</p>
                 </div>
-                <button className="btn" onClick={onclick}>
-                    Return Book
+                <button className="btn" onClick={onclick} disabled={disabled}>
+                    {disabled ? "Loading..." : "Return Book"}
                     <Icon.ArrowRight className="ms-3" />
                 </button>
             </div>

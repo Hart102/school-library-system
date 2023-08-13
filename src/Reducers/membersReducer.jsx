@@ -59,10 +59,10 @@ export const membersSlice = createSlice({
         // Return books action 
         // This function was used in the members profile page 
         returnBookAction: (state, action) => {
-            if (state.value.success) {
+            if (state.value.success) {  
                 state.value.success.map((member) => {
                     if (member.RegNo == action.payload.regNo) {
-                        member.books.splice(member.books.findIndex(book => book.id === action.payload.bookId), 1);
+                        member.books.splice(member.books.findIndex(book => book.id == action.payload.bookId), 1);
                     }
                 })
             }

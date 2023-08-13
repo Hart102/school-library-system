@@ -23,7 +23,7 @@ const SearchBooks = () => {
     }
 
     const updateBook = (book) => {
-        navigate("/dashboard/add/books", { state: book });
+        navigate("/add/books", { state: book });
     }
 
     const removeBook = (id) => {

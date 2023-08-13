@@ -15,8 +15,32 @@ body {
   transition: 0.5s;
 }
 
+/* -------------------------- */
+/* MAIN LAYOUT STYLING */
+/* ------------------------- */
+.mainLayout {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  background: var(--Ash);
+  overflow-y: scroll;
 
-/* Reused styling  */
+}
+
+/* -------------------------- */
+/* CONTENT STYLING  */
+/* -------------------------- */
+.content {
+  top: 5%;
+  right: 0;
+  bottom: 0;
+  width: 80%;
+  height: 100%;
+  padding: 2em;
+  position: absolute;
+}
+
+/* Reused styles  */
 tr img,
 .search-result img {
   width: 40px;
@@ -29,19 +53,6 @@ tr img,
   background: var(--Ash);
 }
 
-
-
-/* -------------------------- */
-/* MAIN LAYOUT STYLING */
-/* ------------------------- */
-.mainLayout {
-  width: 100%;
-  height: 100vh;
-  position: relative;
-  background: var(--Ash);
-  overflow-y: scroll;
-
-}
 
 p,
 a,
@@ -134,21 +145,8 @@ nav {
   z-index: 90;
 }
 
-
-/* -------------------------- */
-/* CONTENT STYLING  */
-/* -------------------------- */
-.content {
-  top: 5%;
-  right: 0;
-  bottom: 0;
-  width: 80%;
-  height: 100%;
-  padding: 2em;
-  position: absolute;
-}
-
-.admin-form  .form-control, textarea{
+.admin-form .form-control,
+textarea {
   border: 0 !important;
   background: var(--Ash) !important;
   padding: 1em;
@@ -246,7 +244,8 @@ thead {
   .sidebar,
   .content,
   .search-result {
-    width: 100%;
+    width: 100% !important;
+    padding: 0 1em;
   }
 
   .sidebar {

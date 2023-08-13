@@ -51,20 +51,21 @@ const Profile = () => {
   }
 
 
+
   useEffect(() => {
     if (!location.state) return navigation('/');
 
     if (members) {
       /* Find member from redux arrary using the id provided by location */
-      const findMember = members.success.find((member) => member._id == location.state)
-      setMember(findMember)
+      const foundMember = members.success.find((member) => member._id == location.state)
+      setMember(foundMember)
 
       /* find borrowed books from redux using 
       the id provided by the members record and attach a borrowed or returning date to the */
       if (booksList) {
 
         const books = [];
-        booksList.success.map((book) => findMember.books.map((article) => {
+        booksList.success.map((book) => foundMember.books.map((article) => {
           if (book.id == article.id) {
             book = {
               ...book,
@@ -72,13 +73,16 @@ const Profile = () => {
               bookReturningDate: article.bookReturningDate,
             }
             books.push(book)
+            // if(books){
+            //   books.splice(books.findIndex(book => book.id == requestObject.bookId), 1);
+            // }
           }
           setborrowedBooks(books)
         }))
       }
     }
 
-    // Dispatch action to reduce the total number of books when a book is return be a member
+    // Dispatch action to reduce the total number of borrowed books when a book is return by a member
     if (message.title == "success") {
       dispatch(
         descreaseBooksCountAction(requestObject.bookId)
@@ -113,6 +117,7 @@ const Profile = () => {
                 <BooksContent
                   key={index}
                   title={book.title}
+                  disabled={isLoading}
                   filename={ImagePath(book.filename)}
                   borrowerdDate={book.borrowedDate}
                   returningDate={book.bookReturningDate}

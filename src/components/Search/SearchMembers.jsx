@@ -23,7 +23,7 @@ const SearchMembers = () => {
     }
 
     const updatePofile = (member) => {
-        navigate('/dashboard/add/member', { state: member })
+        navigate('/add/member', { state: member })
     }
 
     const removeMember = (id) => {

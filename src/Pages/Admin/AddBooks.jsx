@@ -70,7 +70,6 @@ const AddBooks = () => {
         if (!bookToUpdate) {
             PostRequest(
                 "http://localhost:3000/api/registerBooks", formData,
-                // "http://localhost:3000/api/imageUpload", formData,
 
                 setIsLoading,
                 setIsModalOpen,
@@ -210,8 +209,14 @@ const AddBooks = () => {
 
                 <div className="mt-5">
                     <Button
-                        type='type'
-                        btnText={isLoading ? 'Loading...' : bookToUpdate ? 'Update Book' : 'Add Book'}
+                        type='type' disabled={isLoading}
+                        btnText={
+                            isLoading ?
+                                'Loading...' :
+                                bookToUpdate ?
+                                    'Update Book' :
+                                    'Add Book'
+                        }
                     />
                 </div>
             </FormLayout>

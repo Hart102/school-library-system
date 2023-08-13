@@ -22,7 +22,7 @@ const BorrowersTable = () => {
     // Redirect to update members profile page with members data
     const updatePofile = (member) => {
         navigate(
-            '/dashboard/add/member', { state: member }
+            '/add/member', { state: member }
         )
     }
 

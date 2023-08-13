@@ -73,12 +73,16 @@ const LendBooks = () => {
                 <div className='shadow-sm bg-white rounded d-flex flex-column p-lg-5 p-5 mx-auto'>
                     <div className="text-center">
                         <Title text="lend book" />
-                        <p className='mb-3 fw-light'>Member can only borrow four books at a time</p>
+                        <p className='mb-3'>Member can only borrow four books at a time</p>
                     </div>
                     <SearchMembers />
-                    <input type={"text"} value={member && member.RegNo} disabled />
+                    <div className='admin-form'>
+                        <input type={"text"} className='fw-bold text-success form-control' value={member && member.RegNo} disabled />
+                    </div>
                     <br /><SearchBooks />
-                    <input type={"text"} value={book && book.title} disabled />
+                    <div className='admin-form'>
+                        <input type={"text"} className='fw-bold text-success form-control' value={book && book.title} disabled />
+                    </div>
                     <br />
                     <div className="d-flex justify-content-between align-items-center">
                         <FormInput
